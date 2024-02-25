@@ -173,7 +173,7 @@ Removes a doc from a collection.
 - `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
 - `id`: `<string>`
 
-## Development (this repository)
+## Maintainer
 
 - Commit changes with an issue (closure) reference
 - Run `npm version patch | minor | major` and push changes
