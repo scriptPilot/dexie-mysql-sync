@@ -82,7 +82,7 @@ The `listTasks` function is much more easier with the framework hooks - example 
 import { useLiveQuery } from 'dexie-react-hooks'
 
 function listTasks() {
-  return (useLiveQuery(() => db.tasks.toArray()) || []).filter(d => !d.$deleted)
+  return (useLiveQuery(() => db.tasks.toArray()) || []).filter(doc => !doc.$deleted)
 }
 ```
 
