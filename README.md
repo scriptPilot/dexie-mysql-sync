@@ -54,8 +54,9 @@ sync(db.tasks, 'tasks')
 
 // Export the store functions for the frontend
 export function addTask(task) {
-  task = typeof task === 'string' ? { title: task } : task
-  task.done = false
+  task = typeof task === 'string'
+    ? { title: task, done: false }
+    : { done: false, ...task }
   return add(db.tasks, task)
 }
 export function updateTask(id, updates) {
