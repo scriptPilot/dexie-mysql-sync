@@ -114,7 +114,7 @@ function listTasks() {
 Starts the synchronization. Multiple browser windows are supported.
 
 - `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
-- `path`: <string>
+- `path`: `<string>`
     - basic usage
         - MySQL table name, example: `tasks`
     - with sync direction
@@ -124,11 +124,9 @@ Starts the synchronization. Multiple browser windows are supported.
         - [filter](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#filters), example: `tasks?filter=done,eq,0`
         - [column selection](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#column-selection), example: `tasks?include=id,title`
         - [other ...](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#list)
-- `options`: <object> *optional*
-    - `endpoint`: <string>, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
-    - `interval`: <number>, default `1000` milliseconds
- 
-<!-- Workaround to break list indenture -->
+- `options`: `<object>` *optional*
+    - `endpoint`: `<string>`, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
+    - `interval`: `<number>`, default `1000` milliseconds
 
 #### resetSync()
 
