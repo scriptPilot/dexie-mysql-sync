@@ -32,7 +32,9 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
 
 ## Usage
 
-### MySQL Setup
+Based on the installation path above. 
+
+### MySQL Schema
 
 All synchronized MySQL tables must have some required extra columns for the synchronization.
 
@@ -40,25 +42,26 @@ Example `schema.sql` file:
 
 ```sql
 CREATE TABLE `tasks` (
+
   -- Required columns
   `id` VARCHAR(36) NOT NULL PRIMARY KEY,
   `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
   `$updated` BIGINT(14) NOT NULL DEFAULT 0,
   `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
+
   -- Optional columns
   `title` VARCHAR(255) NOT NULL,
   `done` TINYINT(1) NOT NULL DEFAULT 0
+
 );
 ```
 
-### Store Setup
+### Application Store
 
 Use the sync and wrapper functions exported by `dexie-mysql-sync` in your application store.
 
 The wrapper functions should be used to set the document properties `id`, `$deleted`,
 `$updated` and `$synchronized` automatically.
-
-Live queries in Dexie.js can be used with JavaScript, React, Svelte, Vue and Angular as usual.
 
 For synchronization purpose, documents are not deleted from the local database
 but have a property `$deleted` which ist set to `true`.
@@ -94,26 +97,13 @@ export function removeTask(id) {
 }
 export function listTasks(onChangeCallback) {
   const observable = Dexie.liveQuery(() => db.tasks.toArray())
-  observable.subscribe({
-    next(docs) {
-      const filteredDocs = (docs || []).filter(doc => !doc.$deleted)
-      onChangeCallback(filteredDocs)
-    }
-  })
+  observable.subscribe({ next: onChangeCallback })
 }
 ```
 
-The `listTasks` function is much more easier with the framework hooks - example for React:
+[Live queries in Dexie.js](https://dexie.org/) can be used with JavaScript, React, Svelte, Vue and Angular as usual.
 
-```js
-import { useLiveQuery } from 'dexie-react-hooks'
-
-function listTasks() {
-  return (useLiveQuery(() => db.tasks.toArray()) || []).filter(doc => !doc.$deleted)
-}
-```
-
-### Frontend Setup
+### Frontend
 
 Example `main.js` file:
 
@@ -129,6 +119,8 @@ import { addTask, updateTask, removeTask, listTasks }  from './store'
 
 })()
 ```
+
+Now, run `npm run dev` to start the backend, frontend and the magical synchronization between.
 
 ## Function Details
 
