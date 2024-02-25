@@ -109,12 +109,42 @@ function listTasks() {
 
 ### Function Details
 
-**sync(collection,path[,options])**
+**sync(collection, path, options = {})**
 
 Starts the synchronization. Multiple browser windows are supported.
 
 - `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
-- `path`: [table name / API list path](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#list) which can contain [filters](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#filters), [column selections](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#column-selection) etc.
+- `path`: <string>
+    - basic usage
+        - MySQL table name, example: `tasks`
+    - with sync direction
+        - prefix `to:` to sync only from local to remote, example: `to:tasks`
+        - prefix `from:` to sync only from remote to local, example: `from:tasks`
+    - with result reduction, effects only the remote to local sync
+        - [filter](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#filters), example: `tasks?filter=done,eq,0`
+        - [column selection](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#column-selection), example: `tasks?include=id,title`
+        - [other ...](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#list)
+- `options`: <object> *optional*
+    - `endpoint`: <string>, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
+    - `interval`: <number>, default `1000` milliseconds
+ 
+**resetSync()**
+
+Resets all synchronizations. All local and remote documents are synchronized again.
+ 
+**add(collection, doc)**
+
+Adds a doc to a collection.
+
+If no `id` property is provided, a UUIDv4 is created automatically.
+
+**update(collection, id, updates)**
+
+Updates a doc in a collection.
+
+**remove(collection, id)**
+
+Removes a doc from a collection.
 
 ## Development (this repository)
 
