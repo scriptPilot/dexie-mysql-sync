@@ -17,8 +17,6 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
     ```bash
     npx add-php-backend
     ```
-
-    Docu: https://github.com/scriptPilot/add-php-backend
     
 3. Install Dexie.js
 
