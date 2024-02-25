@@ -26,7 +26,7 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
 
 ## Usage
 
-All MySQL tables must have some required extra columns for the synchronization.
+All synchronized MySQL tables must have some required extra columns for the synchronization.
 
 Example `schema.sql` file:
 
