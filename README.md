@@ -99,7 +99,7 @@ CREATE TABLE `tasks` (
   `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
   -- Optional columns
   `title` VARCHAR(255) NOT NULL,
-  `done` INTEGER(1) NOT NULL DEFAULT 0
+  `done` TINYINT(1) NOT NULL DEFAULT 0
 );
 ```
 
