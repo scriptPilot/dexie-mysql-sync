@@ -76,7 +76,7 @@ export function listTasks(onChangeCallback) {
 }
 ```
 
-The `listTasks` function is much more easier with the framework hook - example for React:
+The `listTasks` function is much more easier with the framework hooks - example for React:
 
 ```js
 import { useLiveQuery } from 'dexie-react-hooks'
