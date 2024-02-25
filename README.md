@@ -39,10 +39,10 @@ but have a property `$deleted` which ist set to `true`.
 Example `store.js` file:
 
 ```js
-// Import Dexie
+// Import Dexie.js
 import Dexie from 'dexie'
 
-// Import sync and wrapper functions
+// Import the sync and wrapper functions
 import { sync, add, update, remove } from 'dexie-mysql-sync'
 
 // Setup the local database
@@ -52,22 +52,18 @@ db.version(1).stores({ tasks: 'id, title' })
 // Start the synchronization
 sync(db.tasks, 'tasks')
 
-// Export store functions for the frontend
-
+// Export the store functions for the frontend
 export function addTask(task) {
   task = typeof task === 'string' ? { title: task } : task
   task.done = false
   return add(db.tasks, task)
 }
-
 export function updateTask(id, updates) {
   return update(db.tasks, id, updates)
 }
-
 export function removeTask(id) {
   return remove(db.tasks, id)
 }
-
 export function listTasks() {
   return db.tasks.toArray().filter(doc => !doc.$deleted)
 }
