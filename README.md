@@ -91,7 +91,7 @@ MySQL tables must have some required extra columns for the synchronization.
 Example `schema.sql` file:
 
 ```sql
-CREATE TABLE IF NOT EXISTS `tasks` (
+CREATE TABLE `tasks` (
   -- Required columns
   `id` VARCHAR(36) NOT NULL PRIMARY KEY,
   `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
