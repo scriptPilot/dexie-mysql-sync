@@ -26,6 +26,23 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
 
 ## Usage
 
+All MySQL tables must have some required extra columns for the synchronization.
+
+Example `schema.sql` file:
+
+```sql
+CREATE TABLE `tasks` (
+  -- Required columns
+  `id` VARCHAR(36) NOT NULL PRIMARY KEY,
+  `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
+  `$updated` BIGINT(14) NOT NULL DEFAULT 0,
+  `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
+  -- Optional columns
+  `title` VARCHAR(255) NOT NULL,
+  `done` TINYINT(1) NOT NULL DEFAULT 0
+);
+```
+
 Use the sync and wrapper functions exported by `dexie-mysql-sync` in your application store.
 
 The wrapper functions should be used to set the document properties `id`, `$deleted`,
@@ -84,23 +101,6 @@ import { useLiveQuery } from 'dexie-react-hooks'
 function listTasks() {
   return (useLiveQuery(() => db.tasks.toArray()) || []).filter(doc => !doc.$deleted)
 }
-```
-
-MySQL tables must have some required extra columns for the synchronization.
-
-Example `schema.sql` file:
-
-```sql
-CREATE TABLE `tasks` (
-  -- Required columns
-  `id` VARCHAR(36) NOT NULL PRIMARY KEY,
-  `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
-  `$updated` BIGINT(14) NOT NULL DEFAULT 0,
-  `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
-  -- Optional columns
-  `title` VARCHAR(255) NOT NULL,
-  `done` TINYINT(1) NOT NULL DEFAULT 0
-);
 ```
 
 ## Development (this repository)
