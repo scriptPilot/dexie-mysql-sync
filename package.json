@@ -1,0 +1,21 @@
+{
+  "name": "dexie-mysql-sync",
+  "version": "0.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "",
+    "preversion": "npm install && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scriptpilot/dexie-mysql-sync.git"
+  },
+  "author": "scriptPilot <mail@scriptPilot.de>",
+  "license": "MIT",
+  "dependencies": {
+    "js-crud-api": "^0.4.0",
+    "uuid": "^9.0.1"
+  }
+}

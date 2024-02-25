@@ -1,0 +1,90 @@
+on:
+  push:
+    branches:
+      - main
+    paths: 
+      - package.json
+
+concurrency:
+  group: main 
+  
+jobs:
+
+  check-conditions:
+    runs-on: ubuntu-latest
+    outputs:
+      isNewVersion: ${{ steps.check-tag.outputs.exists == 'false' && steps.package-version.outputs.tag != 'v0.0.0' }}
+      npmTokenAvailable: ${{ steps.npm.outputs.available }}
+    steps:
+
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Get the package version tag
+        id: package-version
+        run: echo "tag=v$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+
+      - name: Check if tag exists
+        uses: mukunku/tag-exists-action@v1.6.0
+        id: check-tag
+        with: 
+          tag: ${{ steps.package-version.outputs.tag }}
+
+      - name: Check if NPM token secret is available
+        id: npm
+        run: echo "available=${{ secrets.NPM_TOKEN != '' }}" >> $GITHUB_OUTPUT
+
+  release:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: check-conditions
+    if: needs.check-conditions.outputs.isNewVersion == 'true'
+    steps:
+
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+  
+      - name: Create a new version tag
+        uses: Klemensas/action-autotag@stable
+        id: tag
+        with:
+          tag_prefix: v
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create the changelog
+        uses: heinrichreimer/action-github-changelog-generator@v2.3
+        id: changelog
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract the release notes
+        uses: actions-ecosystem/action-regex-match@v2
+        id: releasenotes
+        with:
+          text: ${{ steps.changelog.outputs.changelog }}
+          regex: ^(\n|.)*?(##(.+)\n\n((\n|.)*?))(\n)+(##(\n|.)*)?(\n)+\\\*(.+)$
+
+      - name: Create a new GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag.outputs.tagname }}
+          body: ${{ steps.releasenotes.outputs.group4 }}
+          artifacts: release-artifacts/*
+
+  deploy-npm:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs:
+      - release
+      - check-conditions
+    if: needs.check-conditions.outputs.npmTokenAvailable == 'true'
+    steps:
+
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        
+      - name: Publish to NPM
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          access: public
+          token: ${{ secrets.NPM_TOKEN }}
