@@ -122,6 +122,8 @@ import { addTask, updateTask, removeTask, listTasks }  from './store'
 
 Now, run `npm run dev` to start the backend, frontend and the magical synchronization between.
 
+Warnings at the console are normal while the MySQL development server is starting.
+
 ## Function Details
 
 ### sync(collection, path, options = {})
