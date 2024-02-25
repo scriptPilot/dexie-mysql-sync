@@ -29,7 +29,7 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
 Use the sync and wrapper functions exported by `dexie-mysql-sync` in your application store.
 
 The wrapper functions should be used to set the document properties `id`, `$deleted`,
-`$updated` and `$synchronized` automatically correct.
+`$updated` and `$synchronized` automatically.
 
 Live queries can be used with JavaScript, React, Svelte, Vue and Angular as usual.
 
