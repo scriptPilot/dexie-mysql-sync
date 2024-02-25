@@ -86,7 +86,7 @@ function listTasks() {
 }
 ```
 
-MySQL tables should have some required extra columns for the synchronization.
+MySQL tables must have some required extra columns for the synchronization.
 
 Example `schema.sql` file:
 
