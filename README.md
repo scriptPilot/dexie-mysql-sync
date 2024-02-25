@@ -138,7 +138,7 @@ Resets all synchronizations. All local and remote documents are synchronized aga
 
 Adds a doc to a collection.
 
-If no `id` property is provided, a UUIDv4 is created automatically.
+If no `id` property is provided, an UUIDv4 is created automatically.
 
 - `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
 - `doc`: `<object>`
