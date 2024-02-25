@@ -65,7 +65,7 @@ export function updateTask(id, updates) {
 export function removeTask(id) {
   return remove(db.tasks, id)
 }
-export function listTasks() {
+export function tasks() {
   return db.tasks.toArray().filter(doc => !doc.$deleted)
 }
 ```
