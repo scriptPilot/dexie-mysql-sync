@@ -127,6 +127,8 @@ Starts the synchronization. Multiple browser windows are supported.
 - `options`: <object> *optional*
     - `endpoint`: <string>, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
     - `interval`: <number>, default `1000` milliseconds
+ 
+<!-- Workaround to break list indenture -->
 
 #### resetSync()
 
