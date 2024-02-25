@@ -51,7 +51,7 @@ CREATE TABLE `tasks` (
 );
 ```
 
-### Frontend Store Setup
+### Store Setup
 
 Use the sync and wrapper functions exported by `dexie-mysql-sync` in your application store.
 
@@ -113,9 +113,26 @@ function listTasks() {
 }
 ```
 
-### Function Details
+### Frontend Setup
 
-#### sync(collection, path, options = {})
+Example `main.js` file:
+
+```js
+import { addTask, updateTask, removeTask, listTasks }  from './store'
+
+(async () => {
+
+  listTasks(console.log)
+  const id = await addTask('First Task')
+  await updateTask(id, { done: true })
+  await removeTask(id)
+
+})()
+```
+
+## Function Details
+
+### sync(collection, path, options = {})
 
 Starts the synchronization. Multiple browser windows are supported.
 
@@ -134,13 +151,13 @@ Starts the synchronization. Multiple browser windows are supported.
     - `endpoint`: `<string>`, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
     - `interval`: `<number>`, default `1000` milliseconds
 
-#### resetSync(database)
+### resetSync(database)
 
 Resets all synchronizations. All local and remote documents are synchronized again.
 
 - `database`: [Dexie.js Database](https://dexie.org/docs/Dexie/Dexie)
  
-#### add(collection, doc)
+### add(collection, doc)
 
 Adds a doc to a collection.
 
@@ -149,7 +166,7 @@ If no `id` property is provided, an UUIDv4 is created automatically.
 - `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
 - `doc`: `<object>`
 
-#### update(collection, id, updates)
+### update(collection, id, updates)
 
 Updates a doc in a collection.
 
@@ -157,7 +174,7 @@ Updates a doc in a collection.
 - `id`: `<string>`
 - `updates`: `<object>`
 
-#### remove(collection, id)
+### remove(collection, id)
 
 Removes a doc from a collection.
 
