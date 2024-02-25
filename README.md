@@ -26,6 +26,8 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
 
 ## Usage
 
+### MySQL Setup
+
 All synchronized MySQL tables must have some required extra columns for the synchronization.
 
 Example `schema.sql` file:
@@ -42,6 +44,8 @@ CREATE TABLE `tasks` (
   `done` TINYINT(1) NOT NULL DEFAULT 0
 );
 ```
+
+### Frontend Store Setup
 
 Use the sync and wrapper functions exported by `dexie-mysql-sync` in your application store.
 
@@ -102,6 +106,15 @@ function listTasks() {
   return (useLiveQuery(() => db.tasks.toArray()) || []).filter(doc => !doc.$deleted)
 }
 ```
+
+### Function Details
+
+**sync(collection,path[,options])**
+
+Starts the synchronization. Multiple browser windows are supported.
+
+- `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
+- `path`: [table name / API list path](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#list) which can contain [filters](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#filters), [column selections](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#column-selection) etc.
 
 ## Development (this repository)
 
