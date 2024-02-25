@@ -109,7 +109,7 @@ function listTasks() {
 
 ### Function Details
 
-**sync(collection, path, options = {})**
+#### sync(collection, path, options = {})
 
 Starts the synchronization. Multiple browser windows are supported.
 
@@ -127,22 +127,22 @@ Starts the synchronization. Multiple browser windows are supported.
 - `options`: <object> *optional*
     - `endpoint`: <string>, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
     - `interval`: <number>, default `1000` milliseconds
- 
-**resetSync()**
+
+#### resetSync()
 
 Resets all synchronizations. All local and remote documents are synchronized again.
  
-**add(collection, doc)**
+#### add(collection, doc)
 
 Adds a doc to a collection.
 
 If no `id` property is provided, a UUIDv4 is created automatically.
 
-**update(collection, id, updates)**
+#### update(collection, id, updates)
 
 Updates a doc in a collection.
 
-**remove(collection, id)**
+#### remove(collection, id)
 
 Removes a doc from a collection.
 
