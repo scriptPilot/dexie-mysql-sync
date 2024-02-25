@@ -76,6 +76,16 @@ export function listTasks(onChangeCallback) {
 }
 ```
 
+The `listTasks` function is much more easier with the framework hook - example for React:
+
+```js
+import { useLiveQuery } from 'dexie-react-hooks'
+
+function listTasks() {
+  return (useLiveQuery(() => db.tasks.toArray()) || []).filter(d => d.$deleted !== 1)
+}
+```
+
 MySQL tables should have some required extra columns for the synchronization.
 
 Example `schema.sql` file:
