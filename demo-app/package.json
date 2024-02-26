@@ -1,0 +1,29 @@
+{
+  "name": "-demo-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run backend && vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "backend": "(docker stop $(docker ps -a -q) || true) && (docker rm -f $(docker ps -a -q) || true) && (docker volume rm $(docker volume ls -q) || true) && docker compose up -d --build"
+  },
+  "dependencies": {
+    "dexie": "^3.2.5",
+    "dexie-mysql-sync": "file:..",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "vite": "^5.1.0"
+  }
+}

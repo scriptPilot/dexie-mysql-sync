@@ -1,0 +1,8 @@
+{
+  "config": {
+    "vendor-dir": "public/vendor"
+  },
+  "require": {
+    "mevdschee/php-crud-api": "^2.14"
+  }
+}

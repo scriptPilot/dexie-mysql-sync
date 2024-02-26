@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+
+  php:
+    build: ./docker/php
+    container_name: php
+    volumes:
+      - ./public:/var/www/html
+    ports:
+      - 8000:80
+    depends_on:
+      - mysql
+
+  composer:
+    build: ./docker/composer
+    container_name: composer
+    volumes:
+      - ./:/app
+    command:
+      - composer
+      - update
+
+  mysql:
+    build:
+      context: ./
+      dockerfile: ./docker/mysql/Dockerfile
+    container_name: mysql
+    restart: always
+
+  phpmyadmin:
+    build: ./docker/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - 8080:80
+    depends_on:
+      - mysql
