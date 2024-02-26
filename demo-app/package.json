@@ -13,6 +13,7 @@
   "dependencies": {
     "dexie": "^3.2.5",
     "dexie-mysql-sync": "file:..",
+    "dexie-react-hooks": "^1.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

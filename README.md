@@ -45,8 +45,8 @@ CREATE TABLE `tasks` (
 
   -- Required columns
   `id` VARCHAR(36) NOT NULL PRIMARY KEY,
-  `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
   `$updated` BIGINT(14) NOT NULL DEFAULT 0,
+  `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
   `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
 
   -- Optional columns
@@ -60,8 +60,8 @@ CREATE TABLE `tasks` (
 
 Use the sync and wrapper functions exported by `dexie-mysql-sync` in your application store.
 
-The wrapper functions should be used to set the document properties `id`, `$deleted`,
-`$updated` and `$synchronized` automatically.
+The wrapper functions should be used to set the document properties `id`, `$updated`,
+`$deleted` and `$synchronized` automatically.
 
 For synchronization purpose, documents are not deleted from the local database
 but have a property `$deleted` which ist set to `true`.

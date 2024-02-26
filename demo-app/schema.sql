@@ -8,8 +8,8 @@ CREATE TABLE `tasks` (
 
   -- Required columns
   `id` VARCHAR(36) NOT NULL PRIMARY KEY,
-  `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
   `$updated` BIGINT(14) NOT NULL DEFAULT 0,
+  `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
   `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
 
   -- Optional columns

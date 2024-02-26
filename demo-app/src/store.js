@@ -1,30 +1,39 @@
-// Import Dexie.js
+// Import Dexie
 import Dexie from 'dexie'
 
-// Import the sync and wrapper functions
-import { sync, add, update, remove } from 'dexie-mysql-sync'
+// Import Dexie React Hook
+import { useLiveQuery } from 'dexie-react-hooks'
+
+// Import Dexie MySQL Sync
+import sync, { resetSync } from 'dexie-mysql-sync'
 
 // Setup the local database
 const db = new Dexie('databaseName')
-db.version(1).stores({ tasks: 'id, title' })
+db.version(1).stores({ tasks: '++id, title' })
+
+// Reset database in development
+// Reset all synchronizations in development
+if (import.meta.env.DEV) {
+  db.tables.every(table => table.clear())
+  resetSync(db)
+}
 
 // Start the synchronization
 sync(db.tasks, 'tasks')
 
-// Export the store functions for the frontend
-export function addTask(task) {
-  task = typeof task === 'string'
-    ? { title: task, done: false }
-    : { done: false, ...task }
-  return add(db.tasks, task)
+// Export database wrapper functions from the store
+export async function addTask(titleOrDoc) {
+  const doc = typeof titleOrDoc === 'string'
+    ? { done: false, title: titleOrDoc }
+    : { done: false, ...titleOrDoc }
+  return await db.tasks.add(doc)
 }
-export function updateTask(id, updates) {
-  return update(db.tasks, id, updates)
+export async function updateTask(id, updates) {
+  return await db.tasks.update(id, updates)
 }
-export function removeTask(id) {
-  return remove(db.tasks, id)
+export async function deleteTask(id) {
+  return await db.tasks.delete(id)
 }
-export function listTasks(onChangeCallback) {
-  const observable = Dexie.liveQuery(() => db.tasks.toArray())
-  observable.subscribe({ next: onChangeCallback })
+export function listTasks() {
+  return (useLiveQuery(() => db.tasks.toArray()) || []).filter(doc => !doc.$deleted)
 }
