@@ -4,6 +4,15 @@ Synchronization between local IndexedDB and MySQL Database.
 
 Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/mevdschee/php-crud-api).
 
+## Demo
+
+Install [Docker](https://www.docker.com/) and [Node.js](https://nodejs.org/) and run:
+
+```bash
+git clone https://github.com/scriptPilot/dexie-mysql-sync.git
+cd dexie-mysql-sync/demo-app && npm install && npm run dev
+```
+
 ## Installation
 
 1. Create a new app project:
@@ -32,105 +41,64 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
 
 ## Usage
 
-Based on the installation path above. 
+Based on the installation path above.
 
-### MySQL Schema
+1. Modify the `schema.sql` file:
 
-All synchronized MySQL tables must have some required extra columns for the synchronization.
+    ```sql
+    CREATE TABLE `tasks` (
 
-Example `schema.sql` file:
+      -- Required columns per table
+      `id` VARCHAR(36) NOT NULL PRIMARY KEY,
+      `$updated` BIGINT(14) NOT NULL DEFAULT 0,
+      `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
+      `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
 
-```sql
-CREATE TABLE `tasks` (
+      -- Optional customized columns per table
+      `title` VARCHAR(255) NOT NULL,
+      `done` TINYINT(1) NOT NULL DEFAULT 0
 
-  -- Required columns
-  `id` VARCHAR(36) NOT NULL PRIMARY KEY,
-  `$updated` BIGINT(14) NOT NULL DEFAULT 0,
-  `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
-  `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ```
 
-  -- Optional columns
-  `title` VARCHAR(255) NOT NULL,
-  `done` TINYINT(1) NOT NULL DEFAULT 0
+2. Create a `store.js` file:
 
-);
-```
+    ```js
+    // Import Dexie.js
+    import Dexie from 'dexie'
 
-### Application Store
+    // Import the sync function
+    import sync from 'dexie-mysql-sync'
 
-Use the sync and wrapper functions exported by `dexie-mysql-sync` in your application store.
+    // Setup the local database
+    const db = new Dexie('databaseName')
+    db.version(1).stores({ tasks: 'id, title' })
 
-The wrapper functions should be used to set the document properties `id`, `$updated`,
-`$deleted` and `$synchronized` automatically.
+    // Delete the local database and reset the sync in development
+    // Ensures to have a clean set of testdata with "npm run dev"
+    if (import.meta.env.DEV) {
+      Dexie.delete('databaseName')
+      resetSync()
+    }
 
-For synchronization purpose, documents are not deleted from the local database
-but have a property `$deleted` which ist set to `true`.
+    // Start the synchronization
+    sync(db.tasks, 'tasks')
 
-Example `store.js` file:
+    // Export the database object
+    export db
+    ```
 
-```js
-// Import Dexie.js
-import Dexie from 'dexie'
+3. Run `npm run dev` and let the magic begin
 
-// Import the sync and wrapper functions
-import { sync, add, update, remove } from 'dexie-mysql-sync'
-
-// Setup the local database
-const db = new Dexie('databaseName')
-db.version(1).stores({ tasks: 'id, title' })
-
-// Start the synchronization
-sync(db.tasks, 'tasks')
-
-// Export the store functions for the frontend
-export function addTask(task) {
-  task = typeof task === 'string'
-    ? { title: task, done: false }
-    : { done: false, ...task }
-  return add(db.tasks, task)
-}
-export function updateTask(id, updates) {
-  return update(db.tasks, id, updates)
-}
-export function removeTask(id) {
-  return remove(db.tasks, id)
-}
-export function listTasks(onChangeCallback) {
-  const observable = Dexie.liveQuery(() => db.tasks.toArray())
-  observable.subscribe({ next: onChangeCallback })
-}
-```
-
-[Live queries in Dexie.js](https://dexie.org/) can be used with JavaScript, React, Svelte, Vue and Angular as usual.
-
-### Frontend
-
-Example `main.js` file:
-
-```js
-import { addTask, updateTask, removeTask, listTasks }  from './store'
-
-(async () => {
-
-  listTasks(console.log)
-  const id = await addTask('First Task')
-  await updateTask(id, { done: true })
-  await removeTask(id)
-
-})()
-```
-
-Now, run `npm run dev` to start the backend, frontend and the magical synchronization between.
-
-Warnings at the console are normal while the MySQL development server is starting.
+   Use the database according to the [Dexie.js documentation](https://dexie.org/).
 
 ## Function Details
 
-### sync(collection, path, options = {})
+### sync(table, path, options = {})
 
 Starts the synchronization. Multiple browser windows are supported.
 
-- `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
+- `table`: [Dexie.js Table](https://dexie.org/docs/Dexie/Dexie.%5Btable%5D)
 - `path`: `<string>`
     - basic usage
         - MySQL table name, example: `tasks`
@@ -150,30 +118,6 @@ Starts the synchronization. Multiple browser windows are supported.
 Resets all synchronizations. All local and remote documents are synchronized again.
 
 - `database`: [Dexie.js Database](https://dexie.org/docs/Dexie/Dexie)
- 
-### add(collection, doc)
-
-Adds a doc to a collection.
-
-If no `id` property is provided, an UUIDv4 is created automatically.
-
-- `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
-- `doc`: `<object>`
-
-### update(collection, id, updates)
-
-Updates a doc in a collection.
-
-- `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
-- `id`: `<string>`
-- `updates`: `<object>`
-
-### remove(collection, id)
-
-Removes a doc from a collection.
-
-- `collection`: [Dexie.js Collection](https://dexie.org/docs/Collection/Collection)
-- `id`: `<string>`
 
 ## Maintainer
 

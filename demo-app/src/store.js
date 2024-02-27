@@ -9,13 +9,13 @@ import sync, { resetSync } from 'dexie-mysql-sync'
 
 // Setup the local database
 const db = new Dexie('databaseName')
-db.version(1).stores({ tasks: '++id, title' })
+db.version(1).stores({ tasks: 'id, title' })
 
-// Reset database in development
-// Reset all synchronizations in development
+// Delete the local database and reset the sync in development
+// Ensures to have a clean set of testdata with "npm run dev"
 if (import.meta.env.DEV) {
-  db.tables.every(table => table.clear())
-  resetSync(db)
+  Dexie.delete('databaseName')
+  resetSync()
 }
 
 // Start the synchronization
