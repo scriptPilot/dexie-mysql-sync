@@ -88,9 +88,9 @@ Based on the installation path above.
     export db
     ```
 
-3. Run `npm run dev` and let the magic begin
+Run `npm run dev` and let the magic begin.
 
-   Use the database according to the [Dexie.js documentation](https://dexie.org/).
+Use the database according to the [Dexie.js documentation](https://dexie.org/).
 
 ## Function Details
 
