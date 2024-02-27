@@ -49,18 +49,18 @@ Based on the installation path above.
 1. Modify the `schema.sql` file:
 
     ```sql
-    CREATE TABLE `tasks` (
+    CREATE TABLE IF NOT EXISTS `tasks` (
 
       -- Required columns per table
       `id` VARCHAR(36) NOT NULL PRIMARY KEY,
       `$updated` BIGINT(14) NOT NULL DEFAULT 0,
       `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
       `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
-
+    
       -- Optional customized columns per table
       `title` VARCHAR(255) NOT NULL,
       `done` TINYINT(1) NOT NULL DEFAULT 0
-
+    
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ```
 
