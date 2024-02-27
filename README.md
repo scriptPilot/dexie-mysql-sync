@@ -79,12 +79,8 @@ Based on the installation path above.
     const db = new Dexie('databaseName')
     db.version(1).stores({ tasks: 'id, title' })
 
-    // Delete the local database and reset the sync in development
-    // Ensures to have a clean set of testdata with "npm run dev"
-    if (import.meta.env.DEV) {
-    Dexie.delete(db.name)
-    resetSync()
-    }
+    // Reset the sync in development mode
+    if (import.meta.env.DEV) resetSync(db)
 
     // Start the synchronization
     sync(db.tasks, 'tasks')
