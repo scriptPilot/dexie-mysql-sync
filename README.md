@@ -6,7 +6,7 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
 
 ## Demo
 
-Install [Docker](https://www.docker.com/) and [Node.js](https://nodejs.org/) and run:
+Install [Docker](https://www.docker.com/) and [Node.js](https://nodejs.org/), open the Terminal and copy paste:
 
 ```bash
 git clone https://github.com/scriptPilot/dexie-mysql-sync.git
