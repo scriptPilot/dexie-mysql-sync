@@ -34,15 +34,11 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
     npx add-php-backend
     ```
     
-3. Install Dexie.js
+3. Install required dependencies:
 
     ```bash
+    npm install
     npm install dexie
-    ```
-
-5. Install this package:
-
-    ```bash
     npm install dexie-mysql-sync
     ```
 
