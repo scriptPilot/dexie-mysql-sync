@@ -64,7 +64,7 @@ Based on the installation path above.
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ```
 
-2. Create a `store.js` file:
+2. Create a `src/store.js` file:
 
     ```js
     // Import Dexie.js
