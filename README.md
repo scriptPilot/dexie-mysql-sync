@@ -10,7 +10,7 @@ Install [Docker](https://www.docker.com/) and [Node.js](https://nodejs.org/) and
 
 ```bash
 git clone https://github.com/scriptPilot/dexie-mysql-sync.git
-cd dexie-mysql-sync/demo-app && npm install && npm run dev
+cd dexie-mysql-sync && npm install && cd demo-app && npm install && npm run dev
 ```
 
 ## Installation
