@@ -91,7 +91,7 @@ Based on the installation path above.
 
     ```js
     import { db } from './store'
-    console.log(await db.tasks.toArray())
+    db.tasks.toArray().then(console.log)
     ```
 
 ## Function Details
