@@ -87,9 +87,12 @@ Based on the installation path above.
     export db
     ```
 
-3. Run `npm run dev` and let the magic begin.
+3. Use the database according to the [Dexie.js documentation](https://dexie.org/), example `src/main.js` file:
 
-   Use the database according to the [Dexie.js documentation](https://dexie.org/).
+    ```js
+    import { db } from './store'
+    db.tasks.toArray().then(console.log)
+    ```
 
 ## Function Details
 
