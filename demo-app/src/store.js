@@ -5,7 +5,7 @@ import Dexie from 'dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
 
 // Import Dexie MySQL Sync
-import sync, { resetSync } from 'dexie-mysql-sync'
+import { sync, resetSync } from 'dexie-mysql-sync'
 
 // Setup the local database
 const db = new Dexie('databaseName')
@@ -14,7 +14,7 @@ db.version(1).stores({ tasks: 'id, title' })
 // Delete the local database and reset the sync in development
 // Ensures to have a clean set of testdata with "npm run dev"
 if (import.meta.env.DEV) {
-  Dexie.delete('databaseName')
+  Dexie.delete(db.name)
   resetSync()
 }
 

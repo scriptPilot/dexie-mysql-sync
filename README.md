@@ -77,8 +77,8 @@ Based on the installation path above.
     // Delete the local database and reset the sync in development
     // Ensures to have a clean set of testdata with "npm run dev"
     if (import.meta.env.DEV) {
-      Dexie.delete('databaseName')
-      resetSync()
+    Dexie.delete(db.name)
+    resetSync()
     }
 
     // Start the synchronization
