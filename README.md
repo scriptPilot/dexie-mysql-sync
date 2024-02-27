@@ -14,7 +14,7 @@ cd dexie-mysql-sync && npm install && cd demo-app && npm install && npm run dev
 ```
 
 - Open the **Todo App** at http://localhost:5173 in multiple browsers and play with the synchronization.
-- Open **phpMyAdmin** at http://localhost:8080, login with "root:root" and take a look at the database.
+- Open **phpMyAdmin** at http://localhost:8080, login with `root`:`root` and take a look at the database.
 
 <img width="606" alt="Bildschirmfoto 2024-02-27 um 23 56 46" src="https://github.com/scriptPilot/dexie-mysql-sync/assets/19615586/02f26aa0-c85b-4fee-9789-58020b85e454">
 
