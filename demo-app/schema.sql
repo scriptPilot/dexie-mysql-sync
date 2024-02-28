@@ -18,7 +18,7 @@ CREATE TABLE `tasks` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `files` (
+CREATE TABLE `images` (
 
   -- Required columns per table
   `id` VARCHAR(36) NOT NULL PRIMARY KEY,

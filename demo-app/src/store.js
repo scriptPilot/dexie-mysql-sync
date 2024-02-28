@@ -11,15 +11,15 @@ import { sync, resetSync } from 'dexie-mysql-sync'
 const db = new Dexie('databaseName')
 db.version(1).stores({
   tasks: '++id, title',
-  files: '++id, name'
+  images: '++id, name'
 })
 
 // Reset the sync in development mode
 if (import.meta.env.DEV) resetSync(db)
 
 // Start the synchronization
-//sync(db.tasks, 'tasks')
-sync(db.files, 'files')
+sync(db.tasks, 'tasks')
+sync(db.images, 'images')
 
 // Export database wrapper functions from the store
 export async function addTask(titleOrDoc) {

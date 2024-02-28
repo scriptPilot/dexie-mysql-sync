@@ -15,7 +15,7 @@ const UploadFile = () => {
     const fileReader = new FileReader();
     fileReader.onload = async (event) => {
       const fileData = event.target.result;
-      await db.files.add({ name: file.name, data: fileData });
+      await db.images.add({ name: file.name, data: fileData });
       setFile(null);
     };
     fileReader.readAsDataURL(file);
@@ -23,7 +23,7 @@ const UploadFile = () => {
 
   return (
     <div>
-      <h2>Upload File</h2>
+      <h2>Upload Image</h2>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
     </div>
@@ -31,14 +31,12 @@ const UploadFile = () => {
 };
 
 const DisplayFile = () => {
-  const [imageUrl, setImageUrl] = useState('');
-  const files = useLiveQuery(() => db.files.toArray())
-  const lastFile = (files || []).sort((a,b) => b.$updated - a.$updated)[0]
-  
+  const files = useLiveQuery(() => db.images.toArray())
+  const lastFile = (files || []).sort((a,b) => b.$updated - a.$updated)[0]  
   return (
     <div>
+       <h2>Display Image</h2>
       Last file name: {lastFile?.name}
-      <h2>Display File</h2>
       {lastFile && <img src={lastFile.data} alt="Uploaded file" style={{width:'100%'}} />}
     </div>
   );
