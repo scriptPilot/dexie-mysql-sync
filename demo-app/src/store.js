@@ -19,7 +19,7 @@ if (import.meta.env.DEV) resetSync(db)
 
 // Start the synchronization
 //sync(db.tasks, 'tasks')
-//sync(db.files, 'files')
+sync(db.files, 'files')
 
 // Export database wrapper functions from the store
 export async function addTask(titleOrDoc) {

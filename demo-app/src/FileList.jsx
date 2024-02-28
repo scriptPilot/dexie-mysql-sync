@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { db } from './store'
+import { useLiveQuery } from 'dexie-react-hooks'
 
 const UploadFile = () => {
   const [file, setFile] = useState(null);
@@ -31,22 +32,14 @@ const UploadFile = () => {
 
 const DisplayFile = () => {
   const [imageUrl, setImageUrl] = useState('');
-
-  const retrieveAndDisplay = async () => {
-    const file = await db.files.orderBy('id').reverse().first();
-    if (file) {
-      setImageUrl(file.data);
-    } else {
-      console.log('File not found');
-    }
-  };
-
+  const files = useLiveQuery(() => db.files.toArray())
+  const lastFile = (files || []).sort((a,b) => b.$updated - a.$updated)[0]
+  
   return (
     <div>
+      Last file name: {lastFile?.name}
       <h2>Display File</h2>
-      <button onClick={retrieveAndDisplay}>Retrieve and Display File</button>
-      {imageUrl && <img src={imageUrl} alt="Uploaded file" style={{width:'100%'}} />}
-      <textarea value={imageUrl} readOnly />
+      {lastFile && <img src={lastFile.data} alt="Uploaded file" style={{width:'100%'}} />}
     </div>
   );
 };

@@ -28,6 +28,6 @@ CREATE TABLE `files` (
 
   -- Optional customized columns per table
   `name` VARCHAR(255) NOT NULL,
-  `data` MEDIUMBLOB NULL
+  `data` MEDIUMTEXT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
