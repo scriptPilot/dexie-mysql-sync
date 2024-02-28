@@ -71,7 +71,7 @@ Based on the installation path above.
     import Dexie from 'dexie'
 
     // Import the sync function
-    import sync from 'dexie-mysql-sync'
+    import { sync } from 'dexie-mysql-sync'
 
     // Setup the local database
     const db = new Dexie('databaseName')
