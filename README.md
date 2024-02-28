@@ -84,7 +84,7 @@ Based on the installation path above.
     sync(db.tasks, 'tasks')
 
     // Export the database object
-    export db
+    export { db }
     ```
 
 3. Use the database according to the [Dexie.js documentation](https://dexie.org/), example `src/main.(js|ts|jsx)` file:
