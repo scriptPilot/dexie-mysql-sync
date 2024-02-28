@@ -11,12 +11,14 @@ import { sync } from 'dexie-mysql-sync'
 const db = new Dexie('databaseName')
 db.version(1).stores({
   tasks: '++id, title',
-  images: '++id, name'
+  images: '++id, name',
+  files: '++id, name'
 })
 
 // Start the synchronization
 sync(db.tasks, 'tasks')
 sync(db.images, 'images')
+sync(db.files, 'files')
 
 // Export database wrapper functions from the store
 export async function addTask(titleOrDoc) {
