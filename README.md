@@ -121,6 +121,8 @@ Starts the synchronization. Multiple browser windows are supported.
     - `endpoint`: `<string>`, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
     - `interval`: `<number>`, default `1000` milliseconds
 
+The same Dexie.js table should be synchronized with only one remote target.
+
 ### resetSync(database)
 
 Resets all synchronizations. All local and remote documents are synchronized again.
