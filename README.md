@@ -64,6 +64,8 @@ Based on the installation path above.
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ```
 
+    The required columns are managed automatically, you have to add or update only the customized columns.
+
 2. Create a `src/store.js` file:
 
     ```js
