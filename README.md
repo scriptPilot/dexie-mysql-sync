@@ -87,12 +87,14 @@ Based on the installation path above.
     export db
     ```
 
-3. Use the database according to the [Dexie.js documentation](https://dexie.org/), example `src/main.js` file:
+3. Use the database according to the [Dexie.js documentation](https://dexie.org/), example `src/main.(js|ts|jsx)` file:
 
     ```js
     import { db } from './store'
     db.tasks.toArray().then(console.log)
     ```
+
+Run `npm run dev` and see the task list from `testdata.sql` beeing logged to the console.
 
 ## Function Details
 
