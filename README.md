@@ -64,8 +64,6 @@ Based on the installation path above.
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ```
 
-    The required columns are managed automatically, you have to add or update only the customized columns.
-
 2. Create a `src/store.js` file:
 
     ```js
@@ -99,6 +97,8 @@ Based on the installation path above.
     ```
 
 Run `npm run dev` and see the task list from `testdata.sql` being logged to the console.
+
+The required properties `id`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually.
 
 ## Function Details
 
