@@ -5,7 +5,7 @@ import Dexie from 'dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
 
 // Import Dexie MySQL Sync
-import { sync, resetSync } from 'dexie-mysql-sync'
+import { sync } from 'dexie-mysql-sync'
 
 // Setup the local database
 const db = new Dexie('databaseName')
@@ -13,9 +13,6 @@ db.version(1).stores({
   tasks: '++id, title',
   images: '++id, name'
 })
-
-// Reset the sync in development mode
-if (import.meta.env.DEV) resetSync(db)
 
 // Start the synchronization
 sync(db.tasks, 'tasks')

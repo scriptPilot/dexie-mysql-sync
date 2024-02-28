@@ -23,7 +23,6 @@ const UploadFile = () => {
 
   return (
     <div>
-      <h2>Upload Image</h2>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
     </div>
@@ -35,7 +34,6 @@ const DisplayFile = () => {
   const lastFile = (files || []).sort((a,b) => b.$updated - a.$updated)[0]  
   return (
     <div>
-       <h2>Display Image</h2>
       Last file name: {lastFile?.name}
       {lastFile && <img src={lastFile.data} alt="Uploaded file" style={{width:'100%'}} />}
     </div>
@@ -45,6 +43,7 @@ const DisplayFile = () => {
 const FileList = () => {
   return (
     <div>
+      <h2>Image List</h2>
       <UploadFile />
       <DisplayFile />
     </div>

@@ -4,6 +4,10 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import TodoList from './TodoList.jsx'
 import ImageList from './ImageList.jsx'
+import FileList from './FileList.jsx'
+
+import { resetSync } from 'dexie-mysql-sync'
+import { db } from './store'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,20 +22,11 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Dexie MySQL Sync</h1>
+      <p><button onClick={() => resetSync(db)}>Reset Sync</button></p>
       <TodoList />
       <ImageList />
+      <FileList />
     </>
   )
 }
