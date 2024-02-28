@@ -9,13 +9,17 @@ import { sync, resetSync } from 'dexie-mysql-sync'
 
 // Setup the local database
 const db = new Dexie('databaseName')
-db.version(1).stores({ tasks: 'id, title' })
+db.version(1).stores({
+  tasks: '++id, title',
+  files: '++id, name'
+})
 
 // Reset the sync in development mode
 if (import.meta.env.DEV) resetSync(db)
 
 // Start the synchronization
-sync(db.tasks, 'tasks')
+//sync(db.tasks, 'tasks')
+//sync(db.files, 'files')
 
 // Export database wrapper functions from the store
 export async function addTask(titleOrDoc) {
@@ -33,3 +37,5 @@ export async function deleteTask(id) {
 export function listTasks() {
   return (useLiveQuery(() => db.tasks.toArray()) || []).filter(doc => !doc.$deleted)
 }
+
+export { db }

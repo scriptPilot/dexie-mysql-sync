@@ -17,3 +17,17 @@ CREATE TABLE `tasks` (
   `done` TINYINT(1) NOT NULL DEFAULT 0
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `files` (
+
+  -- Required columns per table
+  `id` VARCHAR(36) NOT NULL PRIMARY KEY,
+  `$updated` BIGINT(14) NOT NULL DEFAULT 0,
+  `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
+  `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
+
+  -- Optional customized columns per table
+  `name` VARCHAR(255) NOT NULL,
+  `data` MEDIUMBLOB NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
