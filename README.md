@@ -94,7 +94,7 @@ Based on the installation path above.
     db.tasks.toArray().then(console.log)
     ```
 
-Run `npm run dev` and see the task list from `testdata.sql` beeing logged to the console.
+Run `npm run dev` and see the task list from `testdata.sql` being logged to the console.
 
 ## Function Details
 
