@@ -75,7 +75,7 @@ Based on the installation path above.
 
     // Setup the local database
     const db = new Dexie('databaseName')
-    db.version(1).stores({ tasks: 'id, title' })
+    db.version(1).stores({ tasks: '++id, title' })
 
     // Reset the sync in development mode
     if (import.meta.env.DEV) resetSync(db)
