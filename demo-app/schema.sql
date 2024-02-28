@@ -41,7 +41,8 @@ CREATE TABLE `files` (
   `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
 
   -- Optional customized columns per table
-  `name` VARCHAR(255) NOT NULL,
-  `data` MEDIUMBLOB NULL
+  `name` VARCHAR(255) NOT NULL DEFAULT "",
+  `mime` VARCHAR(255) NOT NULL,
+  `data` MEDIUMBLOB NOT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

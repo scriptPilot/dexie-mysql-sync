@@ -5,6 +5,19 @@ import { useLiveQuery } from 'dexie-react-hooks'
 
 const api = useAPI('/api.php')
 
+function arrayBufferToDataURL(arrayBuffer) {
+  const blob = new Blob([arrayBuffer]);
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+      reader.onload = () => {
+          const dataUrl = reader.result;
+          resolve(dataUrl);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+  });
+}
+
 const UploadFile = () => {
   const [file, setFile] = useState(null);
 
@@ -17,12 +30,13 @@ const UploadFile = () => {
 
     const fileReader = new FileReader();
     fileReader.onload = async (event) => {
-      const fileData = event.target.result;
-      await db.files.add({ name: file.name, data: fileData });
-      //await api.create('files', { data: new Blob([fileData]) })
+      const res = event.target.result;
+      const mime = res.replace(/^data:(.*?);base64,(.+)$/, '$1')
+      const data = res.replace(/^data:(.*?);base64,(.+)$/, '$2')
+      await db.files.add({ name: file.name, mime, data });
       setFile(null);
     };
-    fileReader.readAsArrayBuffer(file);
+    fileReader.readAsDataURL(file);
   };
 
   return (
@@ -33,14 +47,15 @@ const UploadFile = () => {
   );
 };
 
-const downloadFile = async (fileName) => {
-  const file = await db.files.get({ name: fileName });
+const downloadFile = async (fileId) => {
+  const file = await db.files.get(fileId);
   if (file) {
-    const blob = new Blob([file.data], { type: 'application/octet-stream' });
-    const url = URL.createObjectURL(blob);
+    //const blob = new Blob([file.data], { type: 'application/octet-stream' });
+    //const url = URL.createObjectURL(blob);
+    const url = `data:${file.mime};base64,${file.data}`
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', fileName);
+    link.setAttribute('download', file.name);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -57,7 +72,7 @@ const DownloadFileList = () => {
       <ul>
         {files?.map(file => (
           <li key={file.id}>
-            {file.name} - <button onClick={() => downloadFile(file.name)}>Download</button>
+            {file.name} - <button onClick={() => downloadFile(file.id)}>Download</button>
             <button onClick={() => db.files.delete(file.id)}>Delete</button>
           </li>
         ))}
