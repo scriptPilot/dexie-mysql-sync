@@ -9,6 +9,7 @@ function ImageRow(image) {
       <td>{image.name}</td>
       <td>{image.type}</td>
       <td>{(image.size > 1024*1024 ? image.size/1024/1024 : image.size/1024).toFixed(1)} {image.size > 1024*1024 ? 'MB' : 'KB'}</td>
+      <td><button onClick={() => db.files.delete(image.id)}>Delete</button></td>
     </tr>
   )
 }
@@ -24,6 +25,7 @@ function ImageTable() {
           <th>Name</th>
           <th>Type</th>
           <th>Size</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
