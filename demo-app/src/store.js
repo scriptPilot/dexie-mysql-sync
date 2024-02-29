@@ -10,17 +10,15 @@ import { sync } from 'dexie-mysql-sync'
 // Setup the local database
 const db = new Dexie('databaseName')
 db.version(1).stores({
-  tasks: '++id, title',
-  images: '++id, name',
-  files: '++id, name'
+  tasks: '++id, title, done',
+  files: '++id, name, type, size' // , dataUrl
 })
 
 // Start the synchronization
 sync(db.tasks, 'tasks')
-sync(db.images, 'images')
 sync(db.files, 'files')
 
-// Export database wrapper functions from the store
+// Task List
 export async function addTask(titleOrDoc) {
   const doc = typeof titleOrDoc === 'string'
     ? { done: false, title: titleOrDoc }

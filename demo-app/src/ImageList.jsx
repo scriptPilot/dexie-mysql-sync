@@ -1,53 +1,44 @@
-import { useState } from 'react';
-import { db } from './store'
+import FileUploadForm from './FileUploadForm'
 import { useLiveQuery } from 'dexie-react-hooks'
+import { db } from './store'
 
-const UploadFile = () => {
-  const [file, setFile] = useState(null);
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    if (!file) return;
-
-    const fileReader = new FileReader();
-    fileReader.onload = async (event) => {
-      const fileData = event.target.result;
-      await db.images.add({ name: file.name, data: fileData });
-      setFile(null);
-    };
-    fileReader.readAsDataURL(file);
-  };
-
+function ImageRow(image) {
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
-    </div>
-  );
-};
+    <tr key={image.id}>
+      <td><img src={image.dataUrl} style={{width:'200px'}} /></td>
+      <td>{image.name}</td>
+      <td>{image.type}</td>
+      <td>{(image.size > 1024*1024 ? image.size/1024/1024 : image.size/1024).toFixed(1)} {image.size > 1024*1024 ? 'MB' : 'KB'}</td>
+    </tr>
+  )
+}
 
-const DisplayFile = () => {
-  const files = useLiveQuery(() => db.images.toArray())
-  const lastFile = (files || []).sort((a,b) => b.$updated - a.$updated)[0]  
-  return (
-    <div>
-      Last file name: {lastFile?.name}
-      {lastFile && <img src={lastFile.data} alt="Uploaded file" style={{width:'100%'}} />}
-    </div>
-  );
-};
+function ImageTable() {
+  const images = useLiveQuery(() => db.files.where('type').startsWith('image/').toArray())
+  if (!images?.length) return ''
+  return (    
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        { images?.map(ImageRow) }
+      </tbody>
+    </table>
+  )
+}
 
-const FileList = () => {
+export default function ImageList() {
   return (
     <div>
       <h2>Image List</h2>
-      <UploadFile />
-      <DisplayFile />
+      <FileUploadForm />
+      <ImageTable />
     </div>
-  );
-};
-
-export default FileList;
+  )
+}
