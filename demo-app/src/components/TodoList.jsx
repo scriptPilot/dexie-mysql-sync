@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import { db, useLiveQuery } from '../store'
+import { Flex, Button, Checkbox, Input, Typography } from 'antd'
+import { DeleteOutlined } from '@ant-design/icons'
+
+const { Title } = Typography
 
 function TaskItem(task) {
   return (
-    <li key={task.id}>
-      <span style={{cursor: 'pointer'}} onClick={() => db.tasks.update(task.id, { done: !task.done })}>{task.done ? '✅' : '☑️'}</span>
-      &nbsp;
-      <input value={task.title} onChange={e => db.tasks.update(task.id, { title: e.target.value})} disabled={task.done} />
-      &nbsp;
-      <span style={{cursor: 'pointer'}} onClick={() => db.tasks.delete(task.id)}>❌</span>
-      &nbsp;
-      <small>(ID {task.id})</small>
-    </li>
+    <Flex gap="small" key={task.id}>
+      <Checkbox checked={task.done} onClick={() => db.tasks.update(task.id, { done: !task.done })} />
+      <Input value={task.title} onChange={e => db.tasks.update(task.id, { title: e.target.value})} disabled={task.done} />
+      { task.done && <Button danger type="link" icon={<DeleteOutlined />} onClick={() => db.tasks.delete(task.id)} /> }
+    </Flex>
   )
 }
 
@@ -23,17 +23,16 @@ function TodoList() {
     setNewTaskTitle('')
   }
   return (
-    <>
-      <h2>Todo List</h2>
-      <p>
-        <input placeholder="New Task Title" value={newTaskTitle} onChange={e => setNewTaskTitle(e.target.value)} onKeyDown={e => e.key === 'Enter' && onAddTask()} />
-        &nbsp;
-        <button onClick={onAddTask}>Add Todo</button>
-      </p>
-      <ul style={{textAlign: 'left', listStyleType: 'none'}}>
+    <Flex gap="middle" vertical>
+      <Title level={2}>Todo List</Title>
+      <Flex gap="middle">
+        <Input placeholder="New Todo Title" value={newTaskTitle} onChange={e => setNewTaskTitle(e.target.value)} onKeyDown={e => e.key === 'Enter' && onAddTask()} />
+        <Button type="primary" onClick={onAddTask}>Add Todo</Button>
+      </Flex>
+      <Flex gap="small" vertical>
         {tasks?.map(TaskItem)}
-      </ul>
-    </>
+      </Flex>
+    </Flex>
   )
 }
 

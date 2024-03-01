@@ -11,6 +11,8 @@
     "backend": "(docker stop $(docker ps -a -q) || true) && (docker rm -f $(docker ps -a -q) || true) && (docker volume rm $(docker volume ls -q) || true) && docker compose up -d --build"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.1",
+    "antd": "^5.14.2",
     "dexie": "^3.2.5",
     "dexie-mysql-sync": "file:..",
     "dexie-react-hooks": "^1.1.7",

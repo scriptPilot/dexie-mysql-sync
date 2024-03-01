@@ -1,18 +1,25 @@
 import TodoList from './TodoList.jsx'
 import FileList from './FileList.jsx'
+import ResetSyncButton from './ResetSyncButton.jsx'
+import { App, Layout, Flex, Typography } from 'antd'
+import { FileSyncOutlined } from '@ant-design/icons'
 
-import { db } from '../store'
-import { resetSync } from 'dexie-mysql-sync'
+const { Title } = Typography
+const { Content } = Layout
 
-export default function App() {
-  return (
-    <>
-      <h1>Dexie MySQL Sync</h1>
-      <p>
-        <button onClick={() => resetSync(db)}>Reset Sync</button>
-      </p>
-      <TodoList />
-      <FileList />
-    </>
+function ReactApp() {
+  return (    
+    <App className="app"> 
+      <Content className="content">
+        <Flex vertical gap="middle">
+          <Title><FileSyncOutlined /> Dexie MySQL Sync</Title>
+          <TodoList />
+          <FileList />
+          <ResetSyncButton />
+      </Flex>
+      </Content> 
+    </App>
   )
 }
+
+export default ReactApp
