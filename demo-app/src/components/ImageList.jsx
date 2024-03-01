@@ -1,6 +1,6 @@
 import FileUploadForm from './FileUploadForm'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { db } from './store'
+import { db } from '../store'
 
 function ImageRow(image) {
   return (

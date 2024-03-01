@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { addTask, updateTask, deleteTask, listTasks } from './store'
+import { addTask, updateTask, deleteTask, useTasks } from '../store/tasks'
 
 export default function TodoList() {
   const [newTaskTitle, setNewTaskTitle] = useState('')
@@ -16,7 +16,7 @@ export default function TodoList() {
         <button onClick={onAddTask}>Add Todo</button>
       </p>
       <ul style={{textAlign: 'left', listStyleType: 'none'}}>
-        {listTasks().map(TaskItem)}
+        {useTasks().map(TaskItem)}
       </ul>
     </>
   )

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { db } from './store'
+import { db } from '../store'
 
 export default function FileUploadForm() {
   const [ file, setFile ] = useState(null)
