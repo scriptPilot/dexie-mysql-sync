@@ -1,48 +1,57 @@
 import FileUploadForm from './FileUploadForm'
-import { db } from '../store'
+import FileDownloadLink from './FileDownloadLink'
 import { useLiveQuery } from 'dexie-react-hooks'
+import { db } from '../store'
 
-const downloadFile = async (fileId) => {
-  const file = await db.files.get(fileId);
-  if (file) {
-    //const blob = new Blob([file.data], { type: 'application/octet-stream' });
-    //const url = URL.createObjectURL(blob);
-    const url = `data:${file.mime};base64,${file.data}`
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', file.name);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-};
+function FileRow(file) {
+  return (
+    <tr key={file.id}>
+      <td>
+        <FileDownloadLink file={file}>
+          {
+            file.type.startsWith('image/')
+              ? <img src={file.dataUrl} style={{width:'200px'}} />
+              : <p style={{margin:'20px'}}>No file preview</p>
+          }
+        </FileDownloadLink>
+      </td>        
+      <td>{file.name}</td>
+      <td>{file.type}</td>
+      <td>{(file.size > 1024*1024 ? file.size/1024/1024 : file.size/1024).toFixed(1)} {file.size > 1024*1024 ? 'MB' : 'KB'}</td>
+      <td><button onClick={() => db.files.delete(file.id)}>Delete</button></td>
+    </tr>
+  )
+}
 
-const DownloadFileList = () => { 
+function FileTable() {
+  const files = useLiveQuery(() => db.files.where('$deleted').notEqual(1).toArray())
+  if (!files?.length) return ''
+  return (    
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        { files?.map(FileRow) }
+      </tbody>
+    </table>
+  )
+}
 
-  const files = useLiveQuery(() => db.files.toArray())  
-
+function FileList() {
   return (
     <div>
-      <ul>
-        {files?.map(file => (
-          <li key={file.id}>
-            {file.name} - <button onClick={() => downloadFile(file.id)}>Download</button>
-            <button onClick={() => db.files.delete(file.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-const App = () => {
-  return (
-    <div>
-    <h2>File List</h2>
+      <h2>File List</h2>
       <FileUploadForm />
-      <DownloadFileList />
+      <FileTable />
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default FileList
