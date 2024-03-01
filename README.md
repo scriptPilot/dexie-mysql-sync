@@ -131,8 +131,8 @@ Resets all synchronizations. All local and remote documents are synchronized aga
 
 ## Maintainer
 
-- Apply changes to the code
-- Apply changes to the `README.md` file and screenshots
-- Commit changes with an issue (closure) reference
-- Run `npm version patch | minor | major` and push changes
-- Let the workflow manage the release to GitHub and NPM
+1. Apply changes to the code
+2. Apply changes to the `README.md` file and screenshots
+3. Commit changes with an issue (closure) reference
+4. Run `npm version patch | minor | major` and push changes
+5. Let the workflow manage the release to GitHub and NPM
