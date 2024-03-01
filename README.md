@@ -18,7 +18,8 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
    
    Open **phpMyAdmin** at http://localhost:8080, login with `root`:`root` and take a look at the database.
 
-<img width="606" alt="Bildschirmfoto 2024-02-27 um 23 56 46" src="https://github.com/scriptPilot/dexie-mysql-sync/assets/19615586/02f26aa0-c85b-4fee-9789-58020b85e454">
+<img width="1251" alt="Bildschirmfoto 2024-03-01 um 11 07 20" src="https://github.com/scriptPilot/dexie-mysql-sync/assets/19615586/4d801668-698d-4c2b-b9b1-99838085bb7f">
+
 
 ## Installation
 
