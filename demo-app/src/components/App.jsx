@@ -2,8 +2,8 @@ import TodoList from './TodoList.jsx'
 import ImageList from './ImageList.jsx'
 import FileList from './FileList.jsx'
 
-import { resetSync } from 'dexie-mysql-sync'
 import { db } from '../store'
+import { resetSync } from 'dexie-mysql-sync'
 
 export default function App() {
   return (

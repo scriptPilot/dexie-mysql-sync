@@ -54,7 +54,7 @@ Based on the installation path above.
       -- Required columns per table
       `id` VARCHAR(36) NOT NULL PRIMARY KEY,
       `$updated` BIGINT(14) NOT NULL DEFAULT 0,
-      `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
+      `$deleted` INTEGER(1) NOT NULL DEFAULT 0,
       `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
     
       -- Optional customized columns per table
@@ -71,14 +71,12 @@ Based on the installation path above.
     import Dexie from 'dexie'
 
     // Import the sync function
-    import { sync, resetSync } from 'dexie-mysql-sync'
+    import { sync } from 'dexie-mysql-sync'
 
     // Setup the local database
+    // Adding $deleted as index allows to query on that field
     const db = new Dexie('databaseName')
-    db.version(1).stores({ tasks: 'id, title' })
-
-    // Reset the sync in development mode
-    if (import.meta.env.DEV) resetSync(db)
+    db.version(1).stores({ tasks: '++id, title, $deleted' })
 
     // Start the synchronization
     sync(db.tasks, 'tasks')
@@ -92,7 +90,7 @@ Based on the installation path above.
     ```js
     import { db } from './store'
     db.tasks.add({ title: 'New Task' }).then(
-      db.tasks.toArray().then(console.log)
+      db.tasks.where('$deleted').notEqual(1).toArray().then(console.log)
     )
     ```
 

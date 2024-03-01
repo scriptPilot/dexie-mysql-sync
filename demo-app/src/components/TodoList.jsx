@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { addTask, updateTask, deleteTask, useTasks } from '../store/tasks'
+import { db, useLiveQuery } from '../store'
 
 export default function TodoList() {
   const [newTaskTitle, setNewTaskTitle] = useState('')
+  const tasks = useLiveQuery(() => db.tasks.where('$deleted').notEqual(1).toArray())
   function onAddTask() {
-    addTask(newTaskTitle)
+    db.tasks.add({ title: newTaskTitle })
     setNewTaskTitle('')
   }
   return (
@@ -16,7 +17,7 @@ export default function TodoList() {
         <button onClick={onAddTask}>Add Todo</button>
       </p>
       <ul style={{textAlign: 'left', listStyleType: 'none'}}>
-        {useTasks().map(TaskItem)}
+        {tasks?.map(TaskItem)}
       </ul>
     </>
   )
@@ -25,11 +26,11 @@ export default function TodoList() {
 function TaskItem(task) {
   return (
     <li key={task.id}>
-      <span style={{cursor: 'pointer'}} onClick={() => updateTask(task.id, { done: !task.done })}>{task.done ? '✅' : '☑️'}</span>
+      <span style={{cursor: 'pointer'}} onClick={() => db.tasks.update(task.id, { done: !task.done })}>{task.done ? '✅' : '☑️'}</span>
       &nbsp;
-      <input value={task.title} onChange={e => updateTask(task.id, { title: e.target.value})} disabled={task.done} />
+      <input value={task.title} onChange={e => db.tasks.update(task.id, { title: e.target.value})} disabled={task.done} />
       &nbsp;
-      <span style={{cursor: 'pointer'}} onClick={() => deleteTask(task.id)}>❌</span>
+      <span style={{cursor: 'pointer'}} onClick={() => db.tasks.delete(task.id)}>❌</span>
       &nbsp;
       <small>(ID {task.id})</small>
     </li>
