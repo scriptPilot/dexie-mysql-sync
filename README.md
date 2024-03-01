@@ -18,7 +18,8 @@ Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/
    
    Open **phpMyAdmin** at http://localhost:8080, login with `root`:`root` and take a look at the database.
 
-<img width="606" alt="Bildschirmfoto 2024-02-27 um 23 56 46" src="https://github.com/scriptPilot/dexie-mysql-sync/assets/19615586/02f26aa0-c85b-4fee-9789-58020b85e454">
+<img width="1251" alt="Bildschirmfoto 2024-03-01 um 11 07 20" src="https://github.com/scriptPilot/dexie-mysql-sync/assets/19615586/4d801668-698d-4c2b-b9b1-99838085bb7f">
+
 
 ## Installation
 
@@ -53,13 +54,14 @@ Based on the installation path above.
 
       -- Required columns per table
       `id` VARCHAR(36) NOT NULL PRIMARY KEY,
+      `$created` BIGINT(14) NOT NULL DEFAULT 0,
       `$updated` BIGINT(14) NOT NULL DEFAULT 0,
-      `$deleted` TINYINT(1) NOT NULL DEFAULT 0,
+      `$deleted` INTEGER(1) NOT NULL DEFAULT 0,
       `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
     
       -- Optional customized columns per table
       `title` VARCHAR(255) NOT NULL,
-      `done` TINYINT(1) NOT NULL DEFAULT 0
+      `done` INTEGER(1) NOT NULL DEFAULT 0
     
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ```
@@ -71,14 +73,12 @@ Based on the installation path above.
     import Dexie from 'dexie'
 
     // Import the sync function
-    import { sync, resetSync } from 'dexie-mysql-sync'
+    import { sync } from 'dexie-mysql-sync'
 
     // Setup the local database
+    // Adding $created and $deleted as index allows to query on these fields
     const db = new Dexie('databaseName')
-    db.version(1).stores({ tasks: '++id, title' })
-
-    // Reset the sync in development mode
-    if (import.meta.env.DEV) resetSync(db)
+    db.version(1).stores({ tasks: '++id, title, $created, $deleted' })
 
     // Start the synchronization
     sync(db.tasks, 'tasks')
@@ -92,13 +92,13 @@ Based on the installation path above.
     ```js
     import { db } from './store'
     db.tasks.add({ title: 'New Task' }).then(
-      db.tasks.toArray().then(console.log)
+      db.tasks.where('$deleted').notEqual(1).toArray().then(console.log)
     )
     ```
 
 Run `npm run dev` and see the task list from `testdata.sql` being logged to the console.
 
-The required properties `id`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
+The required properties `id`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
 
 ## Function Details
 
