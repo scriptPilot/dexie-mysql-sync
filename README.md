@@ -53,13 +53,14 @@ Based on the installation path above.
 
       -- Required columns per table
       `id` VARCHAR(36) NOT NULL PRIMARY KEY,
+      `$created` BIGINT(14) NOT NULL DEFAULT 0,
       `$updated` BIGINT(14) NOT NULL DEFAULT 0,
       `$deleted` INTEGER(1) NOT NULL DEFAULT 0,
       `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
     
       -- Optional customized columns per table
       `title` VARCHAR(255) NOT NULL,
-      `done` TINYINT(1) NOT NULL DEFAULT 0
+      `done` INTEGER(1) NOT NULL DEFAULT 0
     
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ```
@@ -74,9 +75,9 @@ Based on the installation path above.
     import { sync } from 'dexie-mysql-sync'
 
     // Setup the local database
-    // Adding $deleted as index allows to query on that field
+    // Adding $created and $deleted as index allows to query on these fields
     const db = new Dexie('databaseName')
-    db.version(1).stores({ tasks: '++id, title, $deleted' })
+    db.version(1).stores({ tasks: '++id, title, $created, $deleted' })
 
     // Start the synchronization
     sync(db.tasks, 'tasks')
@@ -96,7 +97,7 @@ Based on the installation path above.
 
 Run `npm run dev` and see the task list from `testdata.sql` being logged to the console.
 
-The required properties `id`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
+The required properties `id`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
 
 ## Function Details
 

@@ -8,7 +8,7 @@ import { db } from '../store'
 const { Title } = Typography
 
 function FileTable() {
-  const files = useLiveQuery(() => db.files.where('$deleted').notEqual(1).toArray())
+  const files = useLiveQuery(() => db.files.where('$deleted').notEqual(1).sortBy('$created'))
   const columns = [
     {
       title: 'Preview',
@@ -54,7 +54,7 @@ function FileTable() {
   })
   return (    
    files?.length
-     ? <Table columns={columns} dataSource={dataSource} bordered />
+     ? <Table columns={columns} dataSource={dataSource} pagination={{pageSize:3}} bordered />
      : ''
   )
 }

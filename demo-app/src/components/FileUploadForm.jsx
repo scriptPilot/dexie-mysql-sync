@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { db } from '../store'
 import { Flex, Button, message } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'

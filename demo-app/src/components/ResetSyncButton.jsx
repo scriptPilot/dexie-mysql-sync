@@ -20,7 +20,7 @@ export default function App() {
   return (    
     <Flex gap="middle" vertical>
       <Title level={2}>Reset Sync</Title>
-      <Button type="primary" loading={isLoading} style={{width: '200px'}} icon={<SyncOutlined />} onClick={onReset}>Reset Sync</Button>
+      <Button type="primary" loading={isLoading} style={{width: '200px'}} icon={<SyncOutlined />} onClick={onReset}>Reset Sync</Button>
     </Flex>
   )
 }

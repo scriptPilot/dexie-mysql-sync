@@ -8,16 +8,16 @@ const { Title } = Typography
 function TaskItem(task) {
   return (
     <Flex gap="small" key={task.id}>
-      <Checkbox checked={task.done} onClick={() => db.tasks.update(task.id, { done: !task.done })} />
+      <Checkbox checked={task.done} onClick={() => db.tasks.update(task.id, { done: task.done ? 0 : 1 })} />
       <Input value={task.title} onChange={e => db.tasks.update(task.id, { title: e.target.value})} disabled={task.done} />
-      { task.done && <Button danger type="link" icon={<DeleteOutlined />} onClick={() => db.tasks.delete(task.id)} /> }
+      { task.done ? <Button danger type="link" icon={<DeleteOutlined />} onClick={() => db.tasks.delete(task.id)} /> : '' }
     </Flex>
   )
 }
 
 function TodoList() {
   const [newTaskTitle, setNewTaskTitle] = useState('')
-  const tasks = useLiveQuery(() => db.tasks.where('$deleted').notEqual(1).toArray())
+  const tasks = useLiveQuery(() => db.tasks.where('$deleted').notEqual(1).sortBy('$created'))
   function onAddTask() {
     db.tasks.add({ title: newTaskTitle })
     setNewTaskTitle('')

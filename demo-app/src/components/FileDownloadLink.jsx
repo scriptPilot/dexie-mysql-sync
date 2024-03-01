@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 function FileDownloadLink({ file, children }) {
   function onDownload() {
     const link = document.createElement('a')
