@@ -14,6 +14,7 @@ CREATE TABLE `tasks` (
   `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
 
   -- Optional customized columns per table
+  `userId` INTEGER(4) NOT NULL DEFAULT 0,
   `title` VARCHAR(255) NOT NULL,
   `done` INTEGER(1) NOT NULL DEFAULT 0
 
@@ -29,6 +30,7 @@ CREATE TABLE `files` (
   `$synchronized` BIGINT(14) NOT NULL DEFAULT 0,
 
   -- Optional customized columns per table
+  `userId` INTEGER(4) NOT NULL DEFAULT 0,
   `name` VARCHAR(255) NOT NULL DEFAULT "",
   `type` VARCHAR(255) NOT NULL,
   `size` INTEGER(12) NOT NULL,

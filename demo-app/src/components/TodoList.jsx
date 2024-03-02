@@ -16,10 +16,11 @@ function TaskItem(task) {
 }
 
 function TodoList() {
+  const user = useLiveQuery(() => db.settings.get('user'))?.value || null
   const [newTaskTitle, setNewTaskTitle] = useState('')
   const tasks = useLiveQuery(() => db.tasks.where('$deleted').notEqual(1).sortBy('$created'))
   function onAddTask() {
-    db.tasks.add({ title: newTaskTitle })
+    db.tasks.add({ title: newTaskTitle, userId: user?.id || 0 })
     setNewTaskTitle('')
   }
   return (

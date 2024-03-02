@@ -1,5 +1,6 @@
 import TodoList from './TodoList.jsx'
 import FileList from './FileList.jsx'
+import UserManagement from './UserManagement.jsx'
 import ResetSyncButton from './ResetSyncButton.jsx'
 import { App, Layout, Flex, Typography } from 'antd'
 import { FileSyncOutlined } from '@ant-design/icons'
@@ -15,6 +16,7 @@ function ReactApp() {
           <Title><FileSyncOutlined /> Dexie MySQL Sync</Title>
           <TodoList />
           <FileList />
+          <UserManagement />
           <ResetSyncButton />
       </Flex>
       </Content> 

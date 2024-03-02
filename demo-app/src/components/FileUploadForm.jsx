@@ -1,9 +1,10 @@
 import { useState, useRef } from 'react';
-import { db } from '../store'
+import { db, useLiveQuery } from '../store'
 import { Flex, Button, message } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 
 export default function FileUploadForm() {
+  const user = useLiveQuery(() => db.settings.get('user'))?.value || null
   const fileSizeLimitMB = 5
   const inputField = useRef(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -28,7 +29,7 @@ export default function FileUploadForm() {
       const type = file.type
       const size = file.size
       const dataUrl = e.target.result
-      await db.files.add({ name, type, size, dataUrl })
+      await db.files.add({ name, type, size, dataUrl, userId: user?.id || 0 })
       setIsLoading(false)
     }
     fileReader.readAsDataURL(file)

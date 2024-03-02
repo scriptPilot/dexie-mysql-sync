@@ -2,8 +2,7 @@ import FileUploadForm from './FileUploadForm'
 import FileDownloadLink from './FileDownloadLink'
 import { Flex, Button, Table, Space, Typography } from 'antd'
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons'
-import { useLiveQuery } from 'dexie-react-hooks'
-import { db } from '../store'
+import { db, useLiveQuery } from '../store'
 
 const { Title } = Typography
 

@@ -37,6 +37,12 @@ $config = new Config([
     'authorization.tableHandler' => function ($operation, $tableName) {    
         if ($tableName === 'users') return false;
         return true;
+    },
+    'authorization.recordHandler' => function ($operation, $tableName) { 
+      if ($operation !== 'create' && ($tableName === 'tasks' || $tableName === 'files')) {
+        return 'filter=userId,eq,' . USERID;
+      }
+      return '';
     }
     
 ]);
