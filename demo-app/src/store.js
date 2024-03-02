@@ -19,6 +19,7 @@ db.version(1).stores({
 sync(db.tasks, 'tasks')
 sync(db.files, 'files')
 
+console.log(db === db.tasks.db)
 console.log(await db.tasks.toArray())
 
 // Export the database object
