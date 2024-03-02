@@ -129,6 +129,18 @@ Resets all synchronizations. All local and remote documents are synchronized aga
 
 - `database`: [Dexie.js Database](https://dexie.org/docs/Dexie/Dexie)
 
+## Flowcharts
+
+If you are interested in the internal flows, here you are.
+
+### Table Hooks
+
+![Table Hooks Flowchart](./flowchart-hooks.webp)
+
+### Synchronization
+
+![Synchronization Flowchart](./flowchart-sync.webp)
+
 ## Maintainer
 
 1. Apply changes to the code
