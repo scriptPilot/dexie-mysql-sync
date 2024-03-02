@@ -144,7 +144,7 @@ If you are interested in the internal flows, here you are.
 ## Maintainer
 
 1. Apply changes to the code
-2. Apply changes to the `README.md` file and screenshots
+2. Apply changes to the `README.md` file, flowcharts and screenshots
 3. Commit changes with an issue (closure) reference
 4. Run `npm version patch | minor | major` and push changes
 5. Let the workflow manage the release to GitHub and NPM
