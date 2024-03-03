@@ -17,10 +17,10 @@ Three steps to a running Demo App with two-way synchronization for tasks and fil
     ```
 
 3. Open the **Demo App** at http://localhost:5173 in multiple browsers and play with the synchronization.
+
+   Try the **user management**. Reigster, login, see how personal data is managed well, change the password, logout.
    
    Open **phpMyAdmin** at http://localhost:8080, login with `root`:`root` and take a look at the database.
-
-   Register new **users**, login, see how personal data is managed well, change the password, logout.
 
 <img width="1251" alt="Bildschirmfoto 2024-03-01 um 11 07 20" src="https://github.com/scriptPilot/dexie-mysql-sync/assets/19615586/4d801668-698d-4c2b-b9b1-99838085bb7f">
 
