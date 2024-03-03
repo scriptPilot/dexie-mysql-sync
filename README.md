@@ -2,7 +2,7 @@
 
 Synchronization between local IndexedDB and MySQL Database.
 
-With user authentication. Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/mevdschee/php-crud-api).
+With optional user authentication. Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/mevdschee/php-crud-api).
 
 ## Demo
 
