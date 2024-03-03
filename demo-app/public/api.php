@@ -14,10 +14,6 @@ require('vendor/autoload.php');
 @define('MYSQL_USERNAME', 'root');
 @define('MYSQL_PASSWORD', 'root');
 
-// User ID
-session_start();
-define('USERID', isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : 0);
-
 // Configuration
 $config = new Config([
 
@@ -30,21 +26,24 @@ $config = new Config([
     'username' => MYSQL_USERNAME,
     'password' => MYSQL_PASSWORD,
 
+    // Middlewares
+    'middlewares' => 'dbAuth,authorization,multiTenancy',
+
     // Database Authentication
-    'middlewares' => 'dbAuth,authorization',
     'dbAuth.mode' => 'optional',
     'dbAuth.registerUser' => '1',
+
+    // Database Authorization
     'authorization.tableHandler' => function ($operation, $tableName) {    
         if ($tableName === 'users') return false;
         return true;
     },
-    'authorization.recordHandler' => function ($operation, $tableName) { 
-      if ($operation !== 'create' && ($tableName === 'tasks' || $tableName === 'files')) {
-        return 'filter=userId,eq,' . USERID;
-      }
-      return '';
-    }
-    
+
+    // Multi Tenancy
+    'multiTenancy.handler' => function ($operation, $tableName) {
+      return ['userId' => $_SESSION['user']['id'] ?? 0];
+    },    
+
 ]);
 
 // Initialization
