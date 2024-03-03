@@ -1,6 +1,6 @@
 {
   "name": "dexie-mysql-sync",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "",
   "main": "lib/index.js",
   "type": "module",
