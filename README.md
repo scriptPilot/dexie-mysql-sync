@@ -96,7 +96,7 @@ Based on the installation path above.
     ```js
     import { db } from './store'
     db.tasks.add({ title: 'New Task' }).then(
-      db.tasks.where('$deleted').notEqual(1).sortBy('$created').reverse().then(console.log)
+      db.tasks.where('$deleted').notEqual(1).reverse().sortBy('$created').then(console.log)
     )
     ```
 
