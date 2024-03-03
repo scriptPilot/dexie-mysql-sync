@@ -1,3 +1,5 @@
+/* eslint-disable-rule react/prop-types */
+
 import { useState, useEffect } from 'react'
 import { Button, Typography, Input, Alert, Space } from 'antd'
 import { sync } from '../store'
