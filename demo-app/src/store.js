@@ -5,7 +5,7 @@ import Dexie from 'dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
 
 // Import the sync hook
-import useSync from 'dexie-mysql-sync'
+import usesSync from 'dexie-mysql-sync'
 
 // Setup the local database
 // Adding $created and $deleted as index allows to query on these fields
@@ -16,7 +16,7 @@ db.version(1).stores({
 })
 
 // Start the synchronization
-const sync = useSync()
+const sync = usesSync()
 sync.add(db.tasks, 'tasks')
 sync.add(db.files, 'files')
 
