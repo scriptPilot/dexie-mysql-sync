@@ -100,7 +100,7 @@ Based on the installation path above.
     )
     ```
 
-Run `npm run dev` and see the task list from `testdata.sql` being logged to the console.
+Run `npm run dev` and see the task list from `testdata.sql` plus the new task being logged to the console.
 
 The required properties `id`, `userId`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
 
