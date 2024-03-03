@@ -95,10 +95,15 @@ Based on the installation path above.
 
     ```js
     import { db } from './store'
-    
-    db.tasks.add({ title: 'New Task' }).then(
-      db.tasks.where('$deleted').notEqual(1).reverse().sortBy('$created').then(console.log)
-    )
+        
+    db.tasks
+      .add({ title: 'New Task' })
+      .then(
+        db.tasks
+          .where('$deleted').notEqual(1)
+          .reverse().sortBy('$created')
+          .then(console.log)
+      )
     ```
 
 Run `npm run dev`, open http://localhost:5173 and see how the task list is logged to the console.
