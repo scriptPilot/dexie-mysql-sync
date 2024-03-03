@@ -106,6 +106,8 @@ Open phpMyAdmin at http://localhost:8080, login with `root`:`root` and take a lo
 
 The required properties `id`, `userId`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
 
+When the user is authenticated with `login()`, new records will get the `userId` property automatically and all `read`, `list`, `update` and `delete` requests are limited to the users records. Detailed documentation: [Multi Tenancy Documentation](https://github.com/mevdschee/php-crud-api#multi-tenancy-support).
+
 ## Function Details
 
 ### useSync(endpoint)
