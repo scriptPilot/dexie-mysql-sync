@@ -14,7 +14,7 @@ With optional user authentication. Powered by [Dexie.js](https://dexie.org/) and
     cd dexie-mysql-sync && npm install && cd demo-app && npm install && npm run dev
     ```
 
-3. Open the **Todo App** at http://localhost:5173 in multiple browsers and play with the synchronization.
+3. Open the **Demo App** at http://localhost:5173 in multiple browsers and play with the synchronization.
    
    Open **phpMyAdmin** at http://localhost:8080, login with `root`:`root` and take a look at the database.
 
