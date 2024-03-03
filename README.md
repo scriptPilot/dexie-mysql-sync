@@ -18,7 +18,7 @@ Three steps to a running Demo App with two-way synchronization for tasks and fil
 
 3. Open the **Demo App** at http://localhost:5173 in multiple browsers and play with the synchronization.
 
-   Test the **user management**. Register, login, see how personal data is managed well, change the password logout.
+   Test the **user management**. Register, login, see how personal data is managed well, logout.
    
    Open **phpMyAdmin** at http://localhost:8080, login with `root`:`root` and take a look at the database.
 
