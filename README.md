@@ -67,7 +67,7 @@ Based on the installation path above.
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ```
 
-2. Create a `src/store.js` file:
+2. Create a `store.js` file:
 
     ```js
     // Import Dexie.js
@@ -91,32 +91,39 @@ Based on the installation path above.
     export { db, sync }
     ```
 
-3. Use the database according to the [Dexie.js documentation](https://dexie.org/), example `src/main.(js|ts|jsx)` file:
+3. Use the database according to the [Dexie.js documentation](https://dexie.org/), example `main.js` file:
 
     ```js
     import { db } from './store'
     db.tasks.add({ title: 'New Task' }).then(
-      db.tasks.where('$deleted').notEqual(1).toArray().then(console.log)
+      db.tasks.where('$deleted').notEqual(1).reverse().sortBy('$created').then(console.log)
     )
     ```
 
-Run `npm run dev` and see the task list from `testdata.sql` being logged to the console.
+Run `npm run dev`, open http://localhost:5173 and see how the task list is logged to the console.
+
+Open phpMyAdmin at http://localhost:8080, login with `root`:`root` and take a look at the database.
 
 The required properties `id`, `userId`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
 
-## Function Details
+When the user is authenticated with `login()`, new records will get the `userId` property automatically and all `read`, `list`, `update` and `delete` requests are limited to the users records (see [Multi Tenancy Documentation](https://github.com/mevdschee/php-crud-api#multi-tenancy-support)).
 
-### useSync(endpoint)
+## Class Details
+
+### Sync(endpoint)
 
 Intializes the synchronization API.
 
 - `endpoint`: `<string>`, *optional*, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
 
 ```js
-const sync = useSync()
+import Sync from 'dexie-mysql-sync'
+const sync = new Sync()
 ```
 
-#### sync.add(table, path, options)
+## Function Details
+
+### sync.add(table, path, options)
 
 Starts the synchronization to and from remote. Multiple browser windows are supported.
 
@@ -138,37 +145,37 @@ A local table can be synchronized with only one remote table.
 
 A remote table can be synchronized with one or more local tables.
 
-#### sync.emptyTable(table)
+### sync.emptyTable(table)
 
 Removes all records from a local table without synchronizing them as deleted to the server.
 
 - `table`: [Dexie.js Table](https://dexie.org/docs/Dexie/Dexie.%5Btable%5D)
 
-#### sync.reset()
+### sync.reset()
 
 Resets all synchronizations. All local and remote documents are synchronized again.
 
 - `database`: [Dexie.js Database](https://dexie.org/docs/Dexie/Dexie)
 
-#### sync.register(username, password)
+### sync.register(username, password)
 
 Creates a new user.
 
-#### sync.login(username, password)
+### sync.login(username, password)
 
 Logs the user in, clears all local tables and resets the synchronization.
 
-#### sync.password(username, password, newPassword)
+### sync.password(username, password, newPassword)
 
 Updates the password of the user.
 
-#### sync.user(callback)
+### sync.user(callback)
 
 Returns the use details or null.
 
 - `callback`: `<function>` *optional*, callback on any user change with user details or null
 
-#### sync.logout()
+### sync.logout()
 
 Logs the user out, clears all local tables and resets the synchronization.
 
