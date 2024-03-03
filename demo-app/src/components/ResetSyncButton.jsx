@@ -4,14 +4,12 @@ import { SyncOutlined } from '@ant-design/icons'
 
 const { Title } = Typography
 
-import { db } from '../store'
-import { resetSync } from 'dexie-mysql-sync'
-
+import { sync } from '../store'
 export default function App() {
   const [ isLoading, setIsLoading ] = useState(false)
   async function onReset() {
     setIsLoading(true)
-    resetSync(db).then(() => {
+    sync.reset().then(() => {
       setTimeout(() => {
         setIsLoading(false)
       }, 1000)

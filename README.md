@@ -2,7 +2,7 @@
 
 Synchronization between local IndexedDB and MySQL Database.
 
-Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/mevdschee/php-crud-api).
+With user authentication. Powered by [Dexie.js](https://dexie.org/) and [PHP CRUD API](https://github.com/mevdschee/php-crud-api).
 
 ## Demo
 
@@ -54,6 +54,7 @@ Based on the installation path above.
 
       -- Required columns per table
       `id` VARCHAR(36) NOT NULL PRIMARY KEY,
+      `userId` INTEGER(8) NOT NULL DEFAULT 0,
       `$created` BIGINT(14) NOT NULL DEFAULT 0,
       `$updated` BIGINT(14) NOT NULL DEFAULT 0,
       `$deleted` INTEGER(1) NOT NULL DEFAULT 0,
@@ -72,19 +73,22 @@ Based on the installation path above.
     // Import Dexie.js
     import Dexie from 'dexie'
 
-    // Import the sync function
-    import { sync } from 'dexie-mysql-sync'
+    // Import the sync hook
+    import useSync from 'dexie-mysql-sync'
 
     // Setup the local database
     // Adding $created and $deleted as index allows to query on these fields
     const db = new Dexie('databaseName')
-    db.version(1).stores({ tasks: '++id, title, $created, $deleted' })
+    db.version(1).stores({
+      tasks: '++id, title, $created, $deleted'
+    })
 
     // Start the synchronization
-    sync(db.tasks, 'tasks')
+    const sync = useSync()
+    sync.add(db.tasks, 'tasks')
 
-    // Export the database object
-    export { db }
+    // Export the database and sync objects
+    export { db, sync }
     ```
 
 3. Use the database according to the [Dexie.js documentation](https://dexie.org/), example `src/main.(js|ts|jsx)` file:
@@ -98,13 +102,23 @@ Based on the installation path above.
 
 Run `npm run dev` and see the task list from `testdata.sql` being logged to the console.
 
-The required properties `id`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
+The required properties `id`, `userId`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
 
 ## Function Details
 
-### sync(table, path, options = {})
+### useSync(endpoint)
 
-Starts the synchronization. Multiple browser windows are supported.
+Intializes the synchronization API.
+
+- `endpoint`: `<string>`, *optional*, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
+
+```js
+const sync = useSync()
+```
+
+#### sync.add(table, path, options)
+
+Starts the synchronization to and from remote. Multiple browser windows are supported.
 
 - `table`: [Dexie.js Table](https://dexie.org/docs/Dexie/Dexie.%5Btable%5D)
 - `path`: `<string>`
@@ -118,22 +132,45 @@ Starts the synchronization. Multiple browser windows are supported.
         - [column selection](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#column-selection), example: `tasks?include=id,title`
         - [other ...](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#list)
 - `options`: `<object>` *optional*
-    - `endpoint`: `<string>`, [PHP CRUD API](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#installation) endpoint, internal or external, default `/api.php`
     - `interval`: `<number>`, default `1000` milliseconds
 
-The same Dexie.js table should be synchronized with only one remote target.
+A local table can be synchronized with only one remote table.
 
-### resetSync(database)
+A remote table can be synchronized with one or more local tables.
+
+#### sync.emptyTable(table)
+
+Removes all records from a local table without synchronizing them as deleted to the server.
+
+- `table`: [Dexie.js Table](https://dexie.org/docs/Dexie/Dexie.%5Btable%5D)
+
+#### sync.reset()
 
 Resets all synchronizations. All local and remote documents are synchronized again.
 
 - `database`: [Dexie.js Database](https://dexie.org/docs/Dexie/Dexie)
 
-### emptyTable(table)
+#### sync.register(username, password)
 
-Removes all records from a local table without synchronizing them as deleted to the server.
+Creates a new user.
 
-- `table`: [Dexie.js Table](https://dexie.org/docs/Dexie/Dexie.%5Btable%5D)
+#### sync.login(username, password)
+
+Logs the user in, clears all local tables and resets the synchronization.
+
+#### sync.password(username, password, newPassword)
+
+Updates the password of the user.
+
+#### sync.user(callback)
+
+Returns the use details or null.
+
+- `callback`: `<function>` *optional*, callback on any user change with user details or null
+
+#### sync.logout()
+
+Logs the user out, clears all local tables and resets the synchronization.
 
 ## Flowcharts
 

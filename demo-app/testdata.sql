@@ -1,6 +1,3 @@
-INSERT IGNORE INTO `users` (`id`, `username`, `password`)
-VALUES (1, "root", "cm9vdA==");
-
 INSERT INTO `tasks` (`id`, `$created`, `$updated`, `$deleted`, `$synchronized`, `title`, `done`) VALUES
 ('36922c1e-55b1-49e2-9391-8e6a530b997d', 1709288493292, 1709288498904, 0, 1709288499588, 'First Task', 1),
 ('47484759-4ddd-48b2-af58-dddee5c2bc7b', 1709288495363, 1709288499122, 0, 1709288499650, 'Second Task', 1),

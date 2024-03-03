@@ -1,22 +1,8 @@
-import useAPI from 'js-crud-api'
-import { useState } from 'react'
-import { Space, Button, Typography, Input, Alert, Flex } from 'antd'
-import { db, useLiveQuery } from '../store'
-import { resetSync } from 'dexie-mysql-sync'
+import { useState, useEffect } from 'react'
+import { Button, Typography, Input, Alert, Space } from 'antd'
+import { sync } from '../store'
 
-const api = useAPI('/api.php')
 const { Title } = Typography
-
-async function resetLocalDB() {
-  for (const table of [db.tasks, db.files]) {
-    const ids = await table.toCollection().keys()
-    for (const id of ids) {
-      await table.update(id, { $deleted: 1, $synchronized: 1 })
-      await table.delete(id)
-    }
-  }
-  await resetSync(db)
-}
 
 function Register({ user }) {
   const [username, setUsername] = useState('')
@@ -26,8 +12,10 @@ function Register({ user }) {
   function handleRegister() {
     setAlertMessage('')
     setAlertType('')
-    api.register(username, password)
+    sync.register(username, password)
       .then(user => {
+        setUsername('')
+        setPassword('')
         setAlertType('success')
         setAlertMessage(`User ${user.username} created with ID ${user.id}.`)
       })
@@ -52,8 +40,8 @@ function Register({ user }) {
   )
   return (
     <Space direction="vertical">
-      { alert } 
       { !user && form }
+      { alert } 
     </Space>
   )
 }
@@ -66,11 +54,12 @@ function Login({ user }) {
   function handleLogin() {
     setAlertMessage('')
     setAlertType('')
-    api.login(username, password)
+    sync.login(username, password)
       .then(async user => {
+        setUsername('')
+        setPassword('')
         setAlertType('success')
         setAlertMessage(`User ${user.username} logged in with ID ${user.id}.`)
-        await resetLocalDB()
       })
       .catch(async err => {
         setAlertType('error')
@@ -93,8 +82,8 @@ function Login({ user }) {
   )
   return (
     <Space direction="vertical">
-      { alert } 
       { !user && form }
+      { alert } 
     </Space>
   )
 }
@@ -108,8 +97,11 @@ function ChangePassword({ user }) {
   function handleRegister() {
     setAlertMessage('')
     setAlertType('')
-    api.password(username, password, newPassword)
+    sync.password(username, password, newPassword)
       .then(user => {
+        setUsername('')
+        setPassword('')
+        setNewPassword('')
         setAlertType('success')
         setAlertMessage(`Updated password for user ${user.username} with ID ${user.id}.`)
       })
@@ -136,43 +128,47 @@ function ChangePassword({ user }) {
     </Space>
   )
   return (
-    <Flex vertical gap="middle">
-      { user && form }
+    <Space direction="vertical">
       { alert } 
-    </Flex>
+      { user && form }
+    </Space>
   )
 }
 
 function Logout({ user }) {
+  const [isLoading, setIsLoading] = useState(false)
   async function handleLogout() {
-    await api.logout()
-    await resetLocalDB()
+    setIsLoading(true)
+    sync.logout().finally(setIsLoading(false))
   }
   return (
-    <Button type="primary" onClick={handleLogout} disabled={!user}>Logout</Button>
+    <Button type="primary" onClick={handleLogout} disabled={!user} loading={isLoading}>Logout</Button>
   )
 }
 
 function LoggedOut({ user }) {
   return (
     <Space direction="vertical">
-      <Register user={user} />
       <Login user={user} />
+      <Register user={user} />
     </Space>
   )
 }
 
 function LoggedIn({ user }) {
   return (
-    <Flex gap="large">
+    <Space>
       <ChangePassword user={user} />
       <Logout user={user} />
-    </Flex>
+    </Space>
   )
 }
 
 function UserManagement() {
-  const user = null
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    sync.user(setUser)
+  }, [])
   return (
     <>
       <Title level={2}>User Management</Title>
