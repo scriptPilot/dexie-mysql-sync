@@ -129,6 +129,12 @@ Resets all synchronizations. All local and remote documents are synchronized aga
 
 - `database`: [Dexie.js Database](https://dexie.org/docs/Dexie/Dexie)
 
+### emptyTable(table)
+
+Removes all records from a table without synchronizing them as deleted to the server.
+
+- `table`: [Dexie.js Table](https://dexie.org/docs/Dexie/Dexie.%5Btable%5D)
+
 ## Flowcharts
 
 If you are interested in the internal flows, here you are.
