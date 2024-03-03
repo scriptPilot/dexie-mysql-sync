@@ -70,7 +70,6 @@ function Login({ user }) {
       .then(async user => {
         setAlertType('success')
         setAlertMessage(`User ${user.username} logged in with ID ${user.id}.`)
-        await db.settings.put({ id: 'user', value: { ...user } })
         await resetLocalDB()
       })
       .catch(async err => {
@@ -147,7 +146,6 @@ function ChangePassword({ user }) {
 function Logout({ user }) {
   async function handleLogout() {
     await api.logout()
-    await db.settings.delete('user')
     await resetLocalDB()
   }
   return (
@@ -174,7 +172,7 @@ function LoggedIn({ user }) {
 }
 
 function UserManagement() {
-  const user = useLiveQuery(() => db.settings.get('user'))?.value || null
+  const user = null
   return (
     <>
       <Title level={2}>User Management</Title>
