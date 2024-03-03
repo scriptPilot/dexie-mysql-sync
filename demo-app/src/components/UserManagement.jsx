@@ -7,6 +7,17 @@ import { resetSync } from 'dexie-mysql-sync'
 const api = useAPI('/api.php')
 const { Title } = Typography
 
+async function resetLocalDB() {
+  for (const table of [db.tasks, db.files]) {
+    const ids = await table.toCollection().keys()
+    for (const id of ids) {
+      await table.update(id, { $deleted: 1, $synchronized: 1 })
+      await table.delete(id)
+    }
+  }
+  await resetSync(db)
+}
+
 function Register({ user }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -60,11 +71,7 @@ function Login({ user }) {
         setAlertType('success')
         setAlertMessage(`User ${user.username} logged in with ID ${user.id}.`)
         await db.settings.put({ id: 'user', value: { ...user } })
-        for (const table of [db.tasks, db.files]) {
-          await table.toCollection().modify({ $deleted: 1 })
-          await table.toCollection().delete()
-        }
-        await resetSync(db)
+        await resetLocalDB()
       })
       .catch(async err => {
         setAlertType('error')
@@ -141,11 +148,7 @@ function Logout({ user }) {
   async function handleLogout() {
     await api.logout()
     await db.settings.delete('user')
-    for (const table of [db.tasks, db.files]) {
-      await table.toCollection().modify({ $deleted: 1 })
-      await table.toCollection().delete()
-    }
-    await resetSync(db)
+    await resetLocalDB()
   }
   return (
     <Button type="primary" onClick={handleLogout} disabled={!user}>Logout</Button>
