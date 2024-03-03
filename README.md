@@ -96,11 +96,13 @@ Based on the installation path above.
     ```js
     import { db } from './store'
     db.tasks.add({ title: 'New Task' }).then(
-      db.tasks.where('$deleted').notEqual(1).toArray().then(console.log)
+      db.tasks.where('$deleted').notEqual(1).sortBy('$created').reverse().then(console.log)
     )
     ```
 
 Run `npm run dev`, open http://localhost:5173 and see how the task list is logged to the console.
+
+Open phpMyAdmin at http://localhost:8080, login with root:root and take a look how the data is synchronized.
 
 The required properties `id`, `userId`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
 
