@@ -74,7 +74,7 @@ Based on the installation path above.
     import Dexie from 'dexie'
 
     // Import the sync hook
-    import useSync from 'dexie-mysql-sync'
+    import Sync from 'dexie-mysql-sync'
 
     // Setup the local database
     // Adding $created and $deleted as index allows to query on these fields
@@ -84,7 +84,7 @@ Based on the installation path above.
     })
 
     // Start the synchronization
-    const sync = useSync()
+    const sync = new Sync()
     sync.add(db.tasks, 'tasks')
 
     // Export the database and sync objects
