@@ -129,7 +129,9 @@ const sync = new Sync()
 
 ## Function Details
 
-### sync.add(table, path, options)
+### Synchronization
+
+#### sync.add(table, path, options)
 
 Starts the synchronization to and from remote. Multiple browser windows are supported.
 
@@ -151,37 +153,41 @@ A local table can be synchronized with only one remote table.
 
 A remote table can be synchronized with one or more local tables.
 
-### sync.emptyTable(table)
+#### sync.emptyTable(table)
 
 Removes all records from a local table without synchronizing them as deleted to the server.
 
 - `table`: [Dexie.js Table](https://dexie.org/docs/Dexie/Dexie.%5Btable%5D)
 
-### sync.reset()
+#### sync.reset()
 
 Resets all synchronizations. All local and remote documents are synchronized again.
 
 - `database`: [Dexie.js Database](https://dexie.org/docs/Dexie/Dexie)
 
-### sync.register(username, password)
+### Authentication
+
+See: [Database Authentication Documentation](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#database-authentication) for the PHP CRUD API
+
+#### sync.register(username, password)
 
 Creates a new user.
 
-### sync.login(username, password)
+#### sync.login(username, password)
 
 Logs the user in, clears all local tables and resets the synchronization.
 
-### sync.password(username, password, newPassword)
+#### sync.password(username, password, newPassword)
 
 Updates the password of the user.
 
-### sync.user(callback)
+#### sync.user(callback)
 
 Returns the use details or null.
 
 - `callback`: `<function>` *optional*, callback on any user change with user details or null
 
-### sync.logout()
+#### sync.logout()
 
 Logs the user out, clears all local tables and resets the synchronization.
 
