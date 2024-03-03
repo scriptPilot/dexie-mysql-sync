@@ -131,7 +131,7 @@ Resets all synchronizations. All local and remote documents are synchronized aga
 
 ### emptyTable(table)
 
-Removes all records from a table without synchronizing them as deleted to the server.
+Removes all records from a local table without synchronizing them as deleted to the server.
 
 - `table`: [Dexie.js Table](https://dexie.org/docs/Dexie/Dexie.%5Btable%5D)
 
