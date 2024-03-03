@@ -102,7 +102,7 @@ Based on the installation path above.
 
 Run `npm run dev`, open http://localhost:5173 and see how the task list is logged to the console.
 
-Open phpMyAdmin at http://localhost:8080, login with root:root and take a look at the database.
+Open phpMyAdmin at http://localhost:8080, login with `root`:`root` and take a look at the database.
 
 The required properties `id`, `userId`, `$created`, `$updated`, `$deleted` and `$synchronized` are set and updated automatically, you do not need to modify them manually. By default, UUIDv4 is used for new ids.
 
