@@ -1,4 +1,4 @@
-/* eslint-disable-rule react/prop-types */
+/* eslint-disable react/prop-types */
 
 import { useState, useEffect } from 'react'
 import { Button, Typography, Input, Alert, Space } from 'antd'
