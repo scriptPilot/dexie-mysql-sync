@@ -43,7 +43,7 @@ function Register({ user }) {
   return (
     <Space direction="vertical">
       { !user && form }
-      { alert } 
+      { alert } 
     </Space>
   )
 }
@@ -131,7 +131,7 @@ function ChangePassword({ user }) {
   )
   return (
     <Space direction="vertical">
-      { alert } 
+      { alert } 
       { user && form }
     </Space>
   )
@@ -152,7 +152,7 @@ function LoggedOut({ user }) {
   return (
     <Space direction="vertical">
       <Login user={user} />
-      <Register user={user} />
+      <Register user={user} />
     </Space>
   )
 }
