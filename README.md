@@ -6,6 +6,8 @@ With optional user authentication. Powered by [Dexie.js](https://dexie.org/) and
 
 ## Demo
 
+Three steps to a running Demo App with two-way synchronization for tasks and files and with user authentication.
+
 1. Install [Docker](https://www.docker.com/) and [Node.js](https://nodejs.org/)
 2. Open the Terminal and copy paste:
 
