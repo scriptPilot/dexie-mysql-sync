@@ -38,7 +38,7 @@ function Register({ user }) {
       </Form.Item>
       <Form.Item>
         <Input
-          name="password" placeholder="Password" type="password"
+          name="password" placeholder="Password" type="password" autoComplete="on"
           value={password} onChange={e => setPassword(e.target.value)} />
       </Form.Item>
       <Form.Item>
@@ -86,7 +86,7 @@ function Login({ user }) {
       </Form.Item>
       <Form.Item>
         <Input
-          name="password" placeholder="Password" type="password"
+          name="password" placeholder="Password" type="password" autoComplete="on"
           value={password} onChange={e => setPassword(e.target.value)} />
       </Form.Item>
       <Form.Item>
@@ -136,12 +136,12 @@ function ChangePassword({ user }) {
       </Form.Item>
       <Form.Item>
         <Input
-          name="password" placeholder="Password" type="password"
+          name="password" placeholder="Password" type="password" autoComplete="on"
           value={password} onChange={e => setPassword(e.target.value)} />
       </Form.Item>
       <Form.Item>
         <Input
-          name="newPassword" placeholder="New password" type="password"
+          name="newPassword" placeholder="New password" type="password" autoComplete="on"
           value={newPassword} onChange={e => setNewPassword(e.target.value)} />
       </Form.Item>
       <Form.Item>
