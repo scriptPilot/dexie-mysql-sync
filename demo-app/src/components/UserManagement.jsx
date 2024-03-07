@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { useState, useEffect } from 'react'
-import { Button, Typography, Input, Alert, Space } from 'antd'
+import { Button, Typography, Input, Alert, Space, Form } from 'antd'
 import { sync } from '../store'
 
 const { Title } = Typography
@@ -30,15 +30,21 @@ function Register({ user }) {
     ?  <Alert message={alertMessage} type={alertType || 'info'} />
     : ''
   const form = (
-    <Space>
-      <Input
-        name="username" placeholder="Username"
-        value={username} onChange={e => setUsername(e.target.value)} />
-      <Input
-        name="password" placeholder="Password" type="password"
-        value={password} onChange={e => setPassword(e.target.value)} />
-      <Button type="primary" onClick={handleRegister} disabled={!username || !password}>Register</Button>
-    </Space>
+    <Form layout="inline">
+      <Form.Item>
+        <Input
+          name="username" placeholder="Username"
+          value={username} onChange={e => setUsername(e.target.value)} />
+      </Form.Item>
+      <Form.Item>
+        <Input
+          name="password" placeholder="Password" type="password"
+          value={password} onChange={e => setPassword(e.target.value)} />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" onClick={handleRegister} disabled={!username || !password}>Register</Button>
+      </Form.Item>
+    </Form>
   )
   return (
     <Space direction="vertical">
@@ -72,15 +78,21 @@ function Login({ user }) {
     ?  <Alert message={alertMessage} type={alertType || 'info'} />
     : ''
   const form = (
-    <Space>
-      <Input
-        name="username" placeholder="Username"
-        value={username} onChange={e => setUsername(e.target.value)} />
-      <Input
-        name="password" placeholder="Password" type="password"
-        value={password} onChange={e => setPassword(e.target.value)} />
-      <Button type="primary" onClick={handleLogin} disabled={!username || !password}>Login</Button>
-    </Space>
+    <Form layout="inline">
+      <Form.Item>
+        <Input
+          name="username" placeholder="Username"
+          value={username} onChange={e => setUsername(e.target.value)} />
+      </Form.Item>
+      <Form.Item>
+        <Input
+          name="password" placeholder="Password" type="password"
+          value={password} onChange={e => setPassword(e.target.value)} />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" onClick={handleLogin} disabled={!username || !password}>Login</Button>
+      </Form.Item>
+    </Form>
   )
   return (
     <Space direction="vertical">
@@ -116,18 +128,26 @@ function ChangePassword({ user }) {
     ?  <Alert message={alertMessage} type={alertType || 'info'} />
     : ''
   const form = (
-    <Space>
-      <Input
-        name="username" placeholder="Username"
-        value={username} onChange={e => setUsername(e.target.value)} />
-      <Input
-        name="password" placeholder="Password" type="password"
-        value={password} onChange={e => setPassword(e.target.value)} />
-      <Input
-        name="newPassword" placeholder="New password" type="password"
-        value={newPassword} onChange={e => setNewPassword(e.target.value)} />
-      <Button type="primary" onClick={handleRegister} disabled={!username || !password || !newPassword}>Change Password</Button>
-    </Space>
+    <Form layout="inline">
+      <Form.Item>
+        <Input
+          name="username" placeholder="Username"
+          value={username} onChange={e => setUsername(e.target.value)} />
+      </Form.Item>
+      <Form.Item>
+        <Input
+          name="password" placeholder="Password" type="password"
+          value={password} onChange={e => setPassword(e.target.value)} />
+      </Form.Item>
+      <Form.Item>
+        <Input
+          name="newPassword" placeholder="New password" type="password"
+          value={newPassword} onChange={e => setNewPassword(e.target.value)} />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" onClick={handleRegister} disabled={!username || !password || !newPassword}>Change Password</Button>
+      </Form.Item>
+    </Form>
   )
   return (
     <Space direction="vertical">
