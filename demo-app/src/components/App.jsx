@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import Context from '../context'
 import TodoList from './TodoList.jsx'
 import FileList from './FileList.jsx'
 import UserManagement from './UserManagement.jsx'
@@ -9,6 +11,8 @@ const { Title } = Typography
 const { Content } = Layout
 
 function ReactApp() {
+  const context = useContext(Context)
+  console.log('context', context)
   return (    
     <App className="app"> 
       <Content className="content">
