@@ -145,7 +145,7 @@ Starts the synchronization to and from remote. Multiple browser windows are supp
         - prefix `to:` to sync only from local to remote, example: `to:tasks`
         - prefix `from:` to sync only from remote to local, example: `from:tasks`
     - with result reduction, effects only the remote to local sync
-        - [filter](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#filters), example: `tasks?filter=done,eq,0`
+        - [filter](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#filters), example: `tasks?filter=done,eq,0` (multiple filters are not supported)
         - [column selection](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#column-selection), example: `tasks?include=id,title`
         - [other ...](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#list)
 - `options`: `<object>` *optional*
