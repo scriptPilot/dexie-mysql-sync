@@ -10,7 +10,7 @@ import Sync from 'dexie-mysql-sync'
 // Setup the local database
 // Adding $created and $deleted as index allows to query on these fields
 const db = new Dexie('databaseName')
-db.version(1).stores({
+db.version(2).stores({
   tasks: '++id, title, done, $created, $deleted',
   files: '++id, name, type, size, $created, $deleted',
 })
@@ -18,7 +18,7 @@ db.version(1).stores({
 // Start the synchronization
 const sync = new Sync()
 sync.add(db.tasks, 'tasks')
-sync.add(db.files, 'files')
+sync.add(db.files, 'files', { batchSize: 1 })
 
 // Export the database and sync objects
 export { db, sync, useLiveQuery }

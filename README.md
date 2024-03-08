@@ -150,6 +150,7 @@ Starts the synchronization to and from remote. Multiple browser windows are supp
         - [other ...](https://github.com/mevdschee/php-crud-api?tab=readme-ov-file#list)
 - `options`: `<object>` *optional*
     - `interval`: `<number>`, default `1000` milliseconds
+    - `batchSize`: `<number>`, default `10` documents, decrease to avoid memory issues with large documents
 
 A local table can be synchronized with only one remote table.
 
